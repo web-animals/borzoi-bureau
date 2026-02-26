@@ -330,6 +330,12 @@
             color: white;
         }
         
+        .status-alert {
+            background: #ff0000;
+            color: white;
+            animation: blink 0.5s infinite;
+        }
+        
         .status-completed {
             background: #006400;
             color: white;
@@ -705,7 +711,7 @@
                 realName: "Sasha Volkov",
                 clearance: "LEVEL 10",
                 specialty: "Bureau Administration",
-                image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop",
+                image: "sasha.jpg",
                 status: "Command",
                 missions: 999,
                 description: "Founder and Director of the Borzoi Bureau. Known for her piercing gaze and ability to nap while maintaining complete situational awareness. Holds the record for longest snoot in agency history.",
@@ -782,6 +788,7 @@
         
         // Missions
         const missions = [
+            { time: "15:00", status: "alert", text: "⚠️ PRIORITY ALERT: EVIL BENNY sighted near perimeter. All agents on high alert." },
             { time: "14:42", status: "active", text: "Agent SNOUT-7: Squirrel spotted at coordinates 40.7589, -73.9851. Pursuit initiated." },
             { time: "13:15", status: "completed", text: "Agent PAW-12: Successfully intercepted suspicious package. Contents: Amazon delivery. Threat level: Minimal." },
             { time: "12:30", status: "pending", text: "Agent WHISKERS-9: Requesting permission to continue bird surveillance. It has been 6 hours." },
@@ -808,7 +815,8 @@
             { location: "Front Window - Camera 3", status: "LIVE", emoji: "🪟" },
             { location: "Kitchen - Camera 4", status: "LIVE", emoji: "🍽️" },
             { location: "Bedroom - Camera 5", status: "NO SIGNAL", emoji: "🛏️" },
-            { location: "Dog Park - Drone 1", status: "LIVE", emoji: "🌳" }
+            { location: "Dog Park - Drone 1", status: "LIVE", emoji: "🌳" },
+            { location: "⚠️ THREAT DETECTED", status: "LIVE", emoji: "🐱", isBenny: true }
         ];
         
         // Initialize
@@ -934,12 +942,12 @@
         function renderSurveillance() {
             const grid = document.getElementById('surveillanceGrid');
             grid.innerHTML = feeds.map(f => `
-                <div class="feed-item">
-                    <div class="feed-header">
+                <div class="feed-item" style="${f.isBenny ? 'border-color: #ff0000; animation: pulse 1s infinite;' : ''}">
+                    <div class="feed-header" style="${f.isBenny ? 'background: #660000;' : ''}">
                         <span>${f.location}</span>
                         ${f.status === 'LIVE' ? '<div class="live-indicator"><div class="live-dot"></div>LIVE</div>' : '<span style="color: var(--light-gray);">NO SIGNAL</span>'}
                     </div>
-                    <div class="feed-content">${f.emoji}</div>
+                    <div class="feed-content" style="${f.isBenny ? 'background: url(\'benny.jpg\') center/cover;' : ''}">${f.isBenny ? '' : f.emoji}</div>
                 </div>
             `).join('');
         }
