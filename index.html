@@ -853,7 +853,7 @@
             
             modalBody.innerHTML = `
                 <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 3px solid var(--gold); background: url('${agent.image || "https://placedog.net/400/400?id=" + (index + 1)}') center/cover, var(--black);"></div>
+                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 3px solid var(--gold); background-image: url('${agent.image || "https://placedog.net/400/400?id=" + (index + 1)}'); background-size: cover; background-position: center; background-color: var(--black);"></div>
                     <h2 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-top: 1rem;">
                         ${agent.codename}
                     </h2>
