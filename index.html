@@ -373,6 +373,8 @@
             background-position: center;
         }
         
+        .feed-content[style*="benny-soviet.jpg"]::after { display: none; }
+        
         .feed-content::after {
             content: "NO SIGNAL";
             position: absolute;
@@ -663,7 +665,7 @@
             },
             {
                 codename: "SNOUT-7",
-                realName: "Vladimir Longsnootovich",
+                realName: "Vladimir ███████████████",
                 clearance: "LEVEL 4",
                 specialty: "Counter-Squirrel Operations",
                 status: "Active",
@@ -675,7 +677,7 @@
             },
             {
                 codename: "WHISKERS-9",
-                realName: "Natasha Fluffington",
+                realName: "Natasha ████████████",
                 clearance: "LEVEL 5",
                 specialty: "Avian Surveillance",
                 status: "Active",
@@ -687,7 +689,7 @@
             },
             {
                 codename: "PAW-12",
-                realName: "Dmitri Barkov",
+                realName: "Dmitri ██████",
                 clearance: "LEVEL 3",
                 specialty: "Mail Interdiction",
                 status: "Active",
@@ -699,7 +701,7 @@
             },
             {
                 codename: "TAIL-4",
-                realName: "Anastasia Waggonova",
+                realName: "Anastasia ██████████",
                 clearance: "LEVEL 4",
                 specialty: "Emotional Support Espionage",
                 status: "Deep Cover",
@@ -711,7 +713,7 @@
             },
             {
                 codename: "NOSE-1",
-                realName: "Boris Sniffsky",
+                realName: "Boris █████████",
                 clearance: "LEVEL 5",
                 specialty: "Scent Analysis",
                 status: "Active",
@@ -723,7 +725,7 @@
             },
             {
                 codename: "SLEEP-8",
-                realName: "Svetlana Dozoff",
+                realName: "Svetlana ███████",
                 clearance: "LEVEL 2",
                 specialty: "Strategic Napping",
                 status: "In Position",
@@ -886,7 +888,7 @@
                         <span>${f.isBenny ? '<i class="fas fa-exclamation-triangle"></i> ' : ''}${f.location}</span>
                         ${f.status === 'LIVE' ? '<div class="live-indicator"><div class="live-dot"></div>LIVE</div>' : '<span style="color: var(--light-gray);">NO SIGNAL</span>'}
                     </div>
-                    <div class="feed-content" style="${f.isBenny ? 'background-image: url(sasha.jpg);' : ''}${f.isBenny ? ' --no-signal: none;' : ''}">
+                    <div class="feed-content" style="${f.isBenny ? 'background-image: url(benny-soviet.jpg);' : ''}${f.isBenny ? ' --no-signal: none;' : ''}">
                         ${f.isBenny ? '' : `<i class="fas fa-${f.icon}"></i>`}
                     </div>
                 </div>
