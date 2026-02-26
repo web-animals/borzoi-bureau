@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE BORZOI BUREAU | Classified</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Share+Tech+Mono&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --red: #cc0000;
+            --dark-red: #8b0000;
+            --gold: #ffd700;
+            --black: #0a0a0a;
+            --gray: #2a2a2a;
+            --light-gray: #888;
+            --paper: #f5f5dc;
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--black);
+            color: var(--paper);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* CRT scanline effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        /* Top secret banner */
+        .classified-banner {
+            background: var(--red);
+            color: var(--gold);
+            text-align: center;
+            padding: 0.5rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--gold);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, var(--gray) 0%, var(--black) 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--red);
+        }
+        
+        .emblem {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: var(--dark-red);
+            box-shadow: 0 0 30px rgba(204, 0, 0, 0.5);
+        }
+        
+        .header h1 {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2.5rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        
+        .header .subtitle {
+            color: var(--light-gray);
+            font-style: italic;
+            margin-top: 0.5rem;
+            letter-spacing: 2px;
+        }
+        
+        /* Navigation */
+        .nav {
+            background: var(--gray);
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            border-bottom: 1px solid var(--red);
+        }
+        
+        .nav button {
+            background: transparent;
+            border: none;
+            color: var(--light-gray);
+            padding: 1rem 2rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav button:hover,
+        .nav button.active {
+            color: var(--gold);
+            background: rgba(204, 0, 0, 0.2);
+            border-bottom-color: var(--red);
+        }
+        
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Dashboard cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--gray) 0%, var(--black) 100%);
+            border: 1px solid var(--red);
+            border-radius: 4px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--red);
+        }
+        
+        .stat-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--light-gray);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 0.5rem 0;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        .stat-status {
+            font-size: 0.9rem;
+            color: #00ff00;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        .stat-status.alert {
+            color: var(--red);
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        /* Agent cards */
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .agent-card {
+            background: var(--gray);
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .agent-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(204, 0, 0, 0.3);
+        }
+        
+        .agent-photo {
+            height: 200px;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            border-bottom: 2px solid var(--red);
+        }
+        
+        .agent-info {
+            padding: 1.5rem;
+        }
+        
+        .agent-codename {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .agent-realname {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        
+        .agent-clearance {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.7rem;
+            font-family: 'Share Tech Mono', monospace;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+        }
+        
+        .agent-specialty {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-gray);
+            font-size: 0.9rem;
+            color: var(--paper);
+        }
+        
+        /* Mission log */
+        .mission-log {
+            background: var(--gray);
+            border: 1px solid var(--red);
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .mission-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray);
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+        }
+        
+        .mission-item:last-child {
+            border-bottom: none;
+        }
+        
+        .mission-time {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--light-gray);
+            font-size: 0.8rem;
+            min-width: 80px;
+        }
+        
+        .mission-content {
+            flex: 1;
+        }
+        
+        .mission-status {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+        
+        .status-active {
+            background: var(--red);
+            color: white;
+        }
+        
+        .status-completed {
+            background: #006400;
+            color: white;
+        }
+        
+        .status-pending {
+            background: #8b8000;
+            color: white;
+        }
+        
+        /* Surveillance feed */
+        .surveillance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .feed-item {
+            background: var(--gray);
+            border: 2px solid var(--dark-red);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .feed-header {
+            background: var(--dark-red);
+            padding: 0.5rem 1rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #ff4444;
+        }
+        
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+        
+        .feed-content {
+            aspect-ratio: 4/3;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+        }
+        
+        .feed-content::after {
+            content: "NO SIGNAL";
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--light-gray);
+            opacity: 0.5;
+        }
+        
+        /* Communications */
+        .comm-list {
+            background: var(--gray);
+            border: 1px solid var(--red);
+            border-radius: 4px;
+        }
+        
+        .comm-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .comm-item:hover {
+            background: rgba(204, 0, 0, 0.1);
+        }
+        
+        .comm-item:last-child {
+            border-bottom: none;
+        }
+        
+        .comm-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .comm-sender {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--gold);
+        }
+        
+        .comm-time {
+            color: var(--light-gray);
+            font-size: 0.8rem;
+        }
+        
+        .comm-preview {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+        
+        .comm-item.decrypted .comm-preview {
+            color: var(--paper);
+            font-style: normal;
+        }
+        
+        .comm-item.decrypted .decrypt-btn {
+            display: none;
+        }
+        
+        .decrypt-btn {
+            margin-top: 0.5rem;
+            background: var(--red);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: var(--gray);
+            border: 2px solid var(--gold);
+            border-radius: 4px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-header {
+            background: var(--dark-red);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gold);
+        }
+        
+        .modal-title {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--paper);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .dossier-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .dossier-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .dossier-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--light-gray);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.3rem;
+        }
+        
+        .dossier-value {
+            font-size: 1.1rem;
+            color: var(--paper);
+        }
+        
+        .dossier-redacted {
+            background: var(--black);
+            color: var(--black);
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dossier-redacted:hover,
+        .dossier-redacted.revealed {
+            background: transparent;
+            color: var(--paper);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--gray);
+            color: var(--light-gray);
+            font-size: 0.8rem;
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+                letter-spacing: 4px;
+            }
+            
+            .nav {
+                flex-wrap: wrap;
+            }
+            
+            .nav button {
+                padding: 0.8rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .dashboard-grid,
+            .agent-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="classified-banner">
+        🔴 TOP SECRET // EYES ONLY // NOFORN 🔴
+    </div>
+    
+    <header class="header">
+        <div class="emblem">🐕‍🦺</div>
+        <h1>The Borzoi Bureau</h1>
+        <p class="subtitle">Canine Intelligence Division • Est. 1952</p>
+    </header>
+    
+    <nav class="nav">
+        <button class="active" onclick="showSection('dashboard')">Command</button>
+        <button onclick="showSection('agents')">Operatives</button>
+        <button onclick="showSection('missions')">Missions</button>
+        <button onclick="showSection('surveillance')">Surveillance</button>
+        <button onclick="showSection('comms')">Intercept</button>
+    </nav>
+    
+    <div class="container">
+        <!-- Dashboard -->
+        <section id="dashboard" class="section active">
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Active Agents</div>
+                    <div class="stat-value">47</div>
+                    <div class="stat-status">● OPERATIONAL</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Ongoing Missions</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-status alert">● 3 CRITICAL</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Squirrels Spotted</div>
+                    <div class="stat-value">2,847</div>
+                    <div class="stat-status">● TRACKING</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Treats Dispensed</div>
+                    <div class="stat-value">∞</div>
+                    <div class="stat-status">● UNLIMITED</div>
+                </div>
+            </div>
+            
+            <div style="background: var(--gray); border: 1px solid var(--red); border-radius: 4px; padding: 1.5rem;">
+                <h3 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-bottom: 1rem; text-transform: uppercase;">
+                    Director's Log // Today
+                </h3>
+                <p style="line-height: 1.8; color: var(--paper);">
+                    Agent SNOUT-7 has successfully infiltrated the Pigeon Coalition. After 3 weeks of surveillance, 
+                    we have confirmed they are just regular birds and not, as previously theorized, miniature surveillance 
+                    drones. However, Agent WHISKERS-9 maintains they are "up to something" and refuses to stand down. 
+                    <br><br>
+                    Operation: LONG NOSE continues as planned. The mailman remains unaware of our presence.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Agents -->
+        <section id="agents" class="section">
+            <div class="agent-grid" id="agentGrid"></div>
+        </section>
+        
+        <!-- Missions -->
+        <section id="missions" class="section">
+            <div class="mission-log" id="missionLog"></div>
+        </section>
+        
+        <!-- Surveillance -->
+        <section id="surveillance" class="section">
+            <div class="surveillance-grid" id="surveillanceGrid"></div>
+        </section>
+        
+        <!-- Communications -->
+        <section id="comms" class="section">
+            <div class="comm-list" id="commList"></div>
+        </section>
+    </div>
+    
+    <!-- Agent Modal -->
+    <div class="modal-overlay" id="agentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Agent Dossier</span>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>THE BORZOI BUREAU • CANINE INTELLIGENCE DIVISION</p>
+        <p style="margin-top: 0.5rem; font-size: 0.7rem;">
+            Unauthorized access is punishable by excessive face licking.
+        </p>
+    </footer>
+
+    <script>
+        // Agent database
+        const agents = [
+            {
+                codename: "SNOUT-7",
+                realName: "Vladimir Longsnootovich",
+                clearance: "LEVEL 4",
+                specialty: "Counter-Squirrel Operations",
+                status: "Active",
+                missions: 47,
+                description: "Elite operative with 47 confirmed squirrel sightings. Known for the longest snoot in the agency.",
+                skills: ["Extended Range Scent Detection", "Stealth Napping", "Treat Negotiation"],
+                weaknesses: ["The Vacuum Cleaner", "Thunder", "The Mailman"]
+            },
+            {
+                codename: "WHISKERS-9",
+                realName: "Natasha Fluffington",
+                clearance: "LEVEL 5",
+                specialty: "Avian Surveillance",
+                status: "Active",
+                missions: 23,
+                description: "Convinced all birds are government surveillance drones. Has been staring at a pigeon for 6 hours.",
+                skills: ["Intense Staring", "Bird Identification", "Conspiracy Theorizing"],
+                weaknesses: ["Laser Pointers", "Squirrels (distraction)"]
+            },
+            {
+                codename: "PAW-12",
+                realName: "Dmitri Barkov",
+                clearance: "LEVEL 3",
+                specialty: "Mail Interdiction",
+                status: "Active",
+                missions: 89,
+                description: "Veteran operative with the highest mail interception rate. The mailman fears him.",
+                skills: ["Bark Projection", "Doorbell Detection", "Package Inspection"],
+                weaknesses: ["The Dog Across the Street", "Belly Rubs"]
+            },
+            {
+                codename: "TAIL-4",
+                realName: "Anastasia Waggonova",
+                clearance: "LEVEL 4",
+                specialty: "Emotional Support Espionage",
+                status: "Deep Cover",
+                missions: 12,
+                description: "Undercover as a regular pet. Her tail wags are actually coded messages.",
+                skills: ["Tail Morse Code", "Puppy Eyes", "Strategic Cuddling"],
+                weaknesses: ["Cannot resist treats", "Will betray mission for cheese"]
+            },
+            {
+                codename: "NOSE-1",
+                realName: "Boris Sniffsky",
+                clearance: "LEVEL 5",
+                specialty: "Scent Analysis",
+                status: "Active",
+                missions: 156,
+                description: "The agency's top nose. Can identify a squirrel from 3 blocks away. Retired once, got bored.",
+                skills: ["Olfactory Intelligence", "Tracking", "Finding Lost Treats"],
+                weaknesses: ["Skunks", "His own farts"]
+            },
+            {
+                codename: "SLEEP-8",
+                realName: "Svetlana Dozoff",
+                clearance: "LEVEL 2",
+                specialty: "Strategic Napping",
+                status: "In Position",
+                missions: 8,
+                description: "Appears to be sleeping. Is actually gathering intelligence through dreams.",
+                skills: ["REM Reconnaissance", "Strategic Snoring", "Dream Analysis"],
+                weaknesses: ["Actually just sleeping", "No actual intel gathered yet"]
+            }
+        ];
+        
+        // Missions
+        const missions = [
+            { time: "14:42", status: "active", text: "Agent SNOUT-7: Squirrel spotted at coordinates 40.7589, -73.9851. Pursuit initiated." },
+            { time: "13:15", status: "completed", text: "Agent PAW-12: Successfully intercepted suspicious package. Contents: Amazon delivery. Threat level: Minimal." },
+            { time: "12:30", status: "pending", text: "Agent WHISKERS-9: Requesting permission to continue bird surveillance. It has been 6 hours." },
+            { time: "11:45", status: "completed", text: "Agent TAIL-4: Emotional support mission successful. Target (human) is adequately soothed." },
+            { time: "10:20", status: "active", text: "Agent NOSE-1: Tracking unidentified scent in Sector 4. Possibly: treat, squirrel, or phantom smell." },
+            { time: "09:00", status: "completed", text: "Morning perimeter sweep complete. All agents accounted for. One (SLEEP-8) still in position." },
+            { time: "08:30", status: "completed", text: "Breakfast operation successful. All agents fed. Treats dispensed. Morale: High." }
+        ];
+        
+        // Communications
+        const comms = [
+            { sender: "AGENT SNOUT-7", time: "14:40", encrypted: "BARK BARK BARK WOOF", decrypted: "Squirrel in sector 4. Requesting backup. This is not a drill.", decrypted: false },
+            { sender: "AGENT WHISKERS-9", time: "13:00", encrypted: "MEOW... wait", decrypted: "The pigeons are watching. I know they are. Send treats.", decrypted: false },
+            { sender: "COMMAND", time: "12:00", encrypted: "WOOF WOOF GRRR", decrypted: "All agents: mailman approaching. Defensive positions.", decrypted: false },
+            { sender: "AGENT TAIL-4", time: "11:30", encrypted: "WAG WAG WAG", decrypted: "Deep cover maintained. Human suspects nothing. Belly rubs received.", decrypted: false },
+            { sender: "AGENT PAW-12", time: "10:00", encrypted: "ARF ARF ARF", decrypted: "The mailman has been deterred. Package secured. Marking territory.", decrypted: false },
+            { sender: "VET CLINIC", time: "09:00", encrypted: "[EXTERNAL SOURCE]", decrypted: "Annual checkup reminder. All agents dread this.", decrypted: false }
+        ];
+        
+        // Surveillance feeds
+        const feeds = [
+            { location: "Backyard - Camera 1", status: "LIVE", emoji: "🌳" },
+            { location: "Living Room - Camera 2", status: "LIVE", emoji: "🛋️" },
+            { location: "Front Window - Camera 3", status: "LIVE", emoji: "🪟" },
+            { location: "Kitchen - Camera 4", status: "LIVE", emoji: "🍽️" },
+            { location: "Bedroom - Camera 5", status: "NO SIGNAL", emoji: "🛏️" },
+            { location: "Dog Park - Drone 1", status: "LIVE", emoji: "🌳" }
+        ];
+        
+        // Initialize
+        function init() {
+            renderAgents();
+            renderMissions();
+            renderSurveillance();
+            renderComms();
+        }
+        
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function renderAgents() {
+            const grid = document.getElementById('agentGrid');
+            grid.innerHTML = agents.map((agent, index) => `
+                <div class="agent-card" onclick="showAgentModal(${index})">
+                    <div class="agent-photo">🐕‍🦺</div>
+                    <div class="agent-info">
+                        <div class="agent-codename">${agent.codename}</div>
+                        <div class="agent-realname">${agent.realName}</div>
+                        <span class="agent-clearance">${agent.clearance}</span>
+                        <div class="agent-specialty">${agent.specialty}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function showAgentModal(index) {
+            const agent = agents[index];
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 6rem;">🐕‍🦺</div>
+                    <h2 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-top: 1rem;">
+                        ${agent.codename}
+                    </h2>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Legal Name</div>
+                    <div class="dossier-value">${agent.realName}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Security Clearance</div>
+                    <div class="dossier-value">${agent.clearance}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Operational Specialty</div>
+                    <div class="dossier-value">${agent.specialty}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Current Status</div>
+                    <div class="dossier-value">${agent.status}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Mission Count</div>
+                    <div class="dossier-value">${agent.missions} operations</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Psychological Profile</div>
+                    <div class="dossier-value">${agent.description}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Known Abilities</div>
+                    <div class="dossier-value">
+                        ${agent.skills.map(s => `• ${s}`).join('<br>')}
+                    </div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Operational Vulnerabilities</div>
+                    <div class="dossier-value">
+                        ${agent.weaknesses.map(w => `• ${w}`).join('<br>')}
+                    </div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Home Address</div>
+                    <div class="dossier-value">
+                        <span class="dossier-redacted" onclick="this.classList.toggle('revealed')">[REDACTED - LEVEL 5 CLEARANCE REQUIRED]</span>
+                    </div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Favorite Treat</div>
+                    <div class="dossier-value">
+                        <span class="dossier-redacted" onclick="this.classList.toggle('revealed')">[CLASSIFIED - AGENT SAFETY]</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('agentModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('agentModal').classList.remove('active');
+        }
+        
+        function renderMissions() {
+            const log = document.getElementById('missionLog');
+            log.innerHTML = missions.map(m => `
+                <div class="mission-item">
+                    <div class="mission-time">${m.time}</div>
+                    <div class="mission-content">${m.text}</div>
+                    <span class="mission-status status-${m.status}">${m.status}</span>
+                </div>
+            `).join('');
+        }
+        
+        function renderSurveillance() {
+            const grid = document.getElementById('surveillanceGrid');
+            grid.innerHTML = feeds.map(f => `
+                <div class="feed-item">
+                    <div class="feed-header">
+                        <span>${f.location}</span>
+                        ${f.status === 'LIVE' ? '<div class="live-indicator"><div class="live-dot"></div>LIVE</div>' : '<span style="color: var(--light-gray);">NO SIGNAL</span>'}
+                    </div>
+                    <div class="feed-content">${f.emoji}</div>
+                </div>
+            `).join('');
+        }
+        
+        function renderComms() {
+            const list = document.getElementById('commList');
+            list.innerHTML = comms.map((c, index) => `
+                <div class="comm-item" id="comm-${index}">
+                    <div class="comm-header">
+                        <span class="comm-sender">${c.sender}</span>
+                        <span class="comm-time">${c.time}</span>
+                    </div>
+                    <div class="comm-preview" id="comm-text-${index}">
+                        ${c.decrypted ? c.decrypted : c.encrypted}
+                    </div>
+                    ${!c.decrypted ? `<button class="decrypt-btn" onclick="decryptMessage(${index})">🔓 DECRYPT</button>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        function decryptMessage(index) {
+            const comm = comms[index];
+            const textEl = document.getElementById(`comm-text-${index}`);
+            const itemEl = document.getElementById(`comm-${index}`);
+            
+            textEl.innerHTML = `<em style="color: var(--light-gray);">Decrypting...</em>`;
+            
+            setTimeout(() => {
+                textEl.textContent = comm.decrypted;
+                itemEl.classList.add('decrypted');
+            }, 1000);
+        }
+        
+        // Close modal on outside click
+        document.getElementById('agentModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
