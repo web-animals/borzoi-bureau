@@ -89,6 +89,7 @@
             font-size: 4rem;
             background: var(--dark-red);
             box-shadow: 0 0 30px rgba(204, 0, 0, 0.5);
+            overflow: hidden;
         }
         
         .header h1 {
@@ -606,17 +607,17 @@
     </div>
     
     <header class="header">
-        <div class="emblem"><i class="fas fa-dog"></i></div>
+        <div class="emblem" style="background: url('badge.jpg') center/cover, var(--dark-red); border: 3px solid var(--gold);"><i class="fas fa-dog"></i></div>
         <h1>The Borzoi Bureau</h1>
         <p class="subtitle">Canine Intelligence Division • Est. 1952</p>
     </header>
     
     <nav class="nav">
-        <button class="active" onclick="showSection('dashboard')">Command</button>
-        <button onclick="showSection('agents')">Operatives</button>
-        <button onclick="showSection('missions')">Missions</button>
-        <button onclick="showSection('surveillance')">Surveillance</button>
-        <button onclick="showSection('comms')">Intercept</button>
+        <button id="nav-dashboard" class="active" onclick="showSection('dashboard')">Command</button>
+        <button id="nav-agents" onclick="showSection('agents')">Operatives</button>
+        <button id="nav-missions" onclick="showSection('missions')">Missions</button>
+        <button id="nav-surveillance" onclick="showSection('surveillance')">Surveillance</button>
+        <button id="nav-comms" onclick="showSection('comms')">Intercept</button>
     </nav>
     
     <div class="container">
@@ -826,11 +827,14 @@
         }
         
         function showSection(sectionId) {
+            // Hide all sections
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-            
+            // Show selected section
             document.getElementById(sectionId).classList.add('active');
-            event.target.classList.add('active');
+            
+            // Update nav button highlighting
+            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById('nav-' + sectionId).classList.add('active');
         }
         
         function renderAgents() {
