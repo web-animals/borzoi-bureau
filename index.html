@@ -604,7 +604,7 @@
                     <strong style="color: #ff0000;">PRIORITY ALERT:</strong> EVIL BENNY has been sighted near the perimeter. 
                     All agents are on high alert. This is not a drill.
                     <br><br>
-                    Operation: LONG NOSE continues as planned. The mailman remains unaware of our presence.
+                    Operation: LONG NOSE continues as planned. The mailman remains unaware of our presence. Recruitment active in <span style="background: #000; color: #000;">[REDACTED CITY]</span>.
                 </p>
             </div>
         </section>
@@ -641,7 +641,7 @@
     </div>
     
     <footer class="footer">
-        <p><i class="fas fa-shield-alt"></i> THE BORZOI BUREAU • DIRECTOR SASHA VOLKOV</p>
+        <p><i class="fas fa-shield-alt"></i> THE BORZOI BUREAU • DIRECTOR SASHA [REDACTED]</p>
         <p style="margin-top: 0.5rem; font-size: 0.7rem;">
             Unauthorized access is punishable by excessive face licking.
         </p>
@@ -651,7 +651,7 @@
         const agents = [
             {
                 codename: "DIRECTOR",
-                realName: "Sasha Volkov",
+                realName: "Sasha <span style='background: #000; color: #000; padding: 0 4px;'>VOLKOV</span>",
                 clearance: "LEVEL 10",
                 specialty: "Bureau Administration",
                 status: "Command",
@@ -737,7 +737,7 @@
         
         const missions = [
             { time: "15:00", status: "alert", text: "PRIORITY ALERT: EVIL BENNY sighted near perimeter. All agents on high alert." },
-            { time: "14:42", status: "active", text: "Agent SNOUT-7: Squirrel spotted at coordinates 40.7589, -73.9851. Pursuit initiated." },
+            { time: "14:42", status: "active", text: "Agent SNOUT-7: Squirrel spotted at coordinates ██.████, -██.████ [REDACTED]. Pursuit initiated." },
             { time: "13:15", status: "completed", text: "Agent PAW-12: Successfully intercepted suspicious package. Contents: Amazon delivery. Threat level: Minimal." },
             { time: "12:30", status: "pending", text: "Agent WHISKERS-9: Requesting permission to continue bird surveillance. It has been 6 hours." },
             { time: "11:45", status: "completed", text: "Agent TAIL-4: Emotional support mission successful. Target (human) is adequately soothed." },
@@ -850,6 +850,21 @@
                     <div class="dossier-value">
                         <span class="dossier-redacted" onclick="this.classList.toggle('revealed')">[REDACTED - LEVEL 5 CLEARANCE REQUIRED]</span>
                     </div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Service Number</div>
+                    <div class="dossier-value" style="font-family: monospace;">BB-<span style="background:#000;color:#000;">████</span>-<span style="background:#000;color:#000;">██</span>-<span style="background:#000;color:#000;">████</span></div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Birth Location</div>
+                    <div class="dossier-value"><span style="background:#000;color:#000;padding:0 4px;">[GEOGRAPHIC DATA CLASSIFIED]</span></div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Emergency Contact</div>
+                    <div class="dossier-value"><span style="background:#000;color:#000;padding:0 4px;">[NEXT OF KIN PROTECTED]</span></div>
                 </div>
                 
                 <div class="dossier-section">
