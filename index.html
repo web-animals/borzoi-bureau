@@ -3,6 +3,7 @@
 <head>
     <meta charset="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE BORZOI BUREAU | Classified</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Share+Tech+Mono&display=swap');
         
@@ -601,11 +602,11 @@
 </head>
 <body>
     <div class="classified-banner">
-        🔴 TOP SECRET // EYES ONLY // NOFORN 🔴
+        <i class="fas fa-circle" style="color: #ff0000;"></i> TOP SECRET // EYES ONLY // NOFORN <i class="fas fa-circle" style="color: #ff0000;"></i>
     </div>
     
     <header class="header">
-        <div class="emblem">🐕‍🦺</div>
+        <div class="emblem"><i class="fas fa-dog"></i></div>
         <h1>The Borzoi Bureau</h1>
         <p class="subtitle">Canine Intelligence Division • Est. 1952</p>
     </header>
@@ -625,27 +626,27 @@
                 <div class="stat-card">
                     <div class="stat-label">Active Agents</div>
                     <div class="stat-value">47</div>
-                    <div class="stat-status">● OPERATIONAL</div>
+                    <div class="stat-status"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> OPERATIONAL</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Ongoing Missions</div>
                     <div class="stat-value">12</div>
-                    <div class="stat-status alert">● 3 CRITICAL</div>
+                    <div class="stat-status alert"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> 3 CRITICAL</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Squirrels Spotted</div>
                     <div class="stat-value">2,847</div>
-                    <div class="stat-status">● TRACKING</div>
+                    <div class="stat-status"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> TRACKING</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Treats Dispensed</div>
                     <div class="stat-value">∞</div>
-                    <div class="stat-status">● UNLIMITED</div>
+                    <div class="stat-status"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> UNLIMITED</div>
                 </div>
                 <div class="stat-card" style="border-color: #ff0000;">
                     <div class="stat-label">Benny Threat Level</div>
                     <div class="stat-value" style="color: #ff0000; font-size: 1.8rem;">CRITICAL</div>
-                    <div class="stat-status alert">● EVIL DETECTED</div>
+                    <div class="stat-status alert"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> EVIL DETECTED</div>
                 </div>
             </div>
             
@@ -808,12 +809,12 @@
         
         // Surveillance feeds
         const feeds = [
-            { location: "Backyard - Camera 1", status: "LIVE", emoji: "🌳" },
-            { location: "Living Room - Camera 2", status: "LIVE", emoji: "🛋️" },
-            { location: "Front Window - Camera 3", status: "LIVE", emoji: "🪟" },
-            { location: "Kitchen - Camera 4", status: "LIVE", emoji: "🍽️" },
-            { location: "Bedroom - Camera 5", status: "NO SIGNAL", emoji: "🛏️" },
-            { location: "Dog Park - Drone 1", status: "LIVE", emoji: "🌳" }
+            { location: "Backyard - Camera 1", status: "LIVE", emoji: "<i class="fas fa-tree"></i>" },
+            { location: "Living Room - Camera 2", status: "LIVE", emoji: "<i class="fas fa-couch"></i>" },
+            { location: "Front Window - Camera 3", status: "LIVE", emoji: "<i class="fas fa-window-maximize"></i>" },
+            { location: "Kitchen - Camera 4", status: "LIVE", emoji: "<i class="fas fa-utensils"></i>" },
+            { location: "Bedroom - Camera 5", status: "NO SIGNAL", emoji: "<i class="fas fa-bed"></i>" },
+            { location: "Dog Park - Drone 1", status: "LIVE", emoji: "<i class="fas fa-tree"></i>" }
         ];
         
         // Initialize
@@ -836,7 +837,7 @@
             const grid = document.getElementById('agentGrid');
             grid.innerHTML = agents.map((agent, index) => `
                 <div class="agent-card" onclick="showAgentModal(${index})">
-                    <div class="agent-photo" style="background: url('${agent.image || "https://placedog.net/400/300?id=" + (index + 1)}') center/cover, var(--black);">${agent.image ? '' : '🐕‍🦺'}</div>
+                    <div class="agent-photo" style="background: url('${agent.image || "https://placedog.net/400/300?id=" + (index + 1)}') center/cover, var(--black);">${agent.image ? '' : '<i class="fas fa-dog"></i>'}</div>
                     <div class="agent-info">
                         <div class="agent-codename">${agent.codename}</div>
                         <div class="agent-realname">${agent.realName}</div>
@@ -853,7 +854,7 @@
             
             modalBody.innerHTML = `
                 <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 3px solid var(--gold); background-image: url('${agent.image || "https://placedog.net/400/400?id=" + (index + 1)}'); background-size: cover; background-position: center; background-color: var(--black);"></div>
+                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 3px solid var(--gold); background: url('${agent.image || "https://placedog.net/400/400?id=" + (index + 1)}') center/cover, var(--black);"></div>
                     <h2 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-top: 1rem;">
                         ${agent.codename}
                     </h2>
