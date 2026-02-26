@@ -646,10 +646,10 @@
             
             <div style="background: var(--gray); border: 1px solid var(--red); border-radius: 4px; padding: 1.5rem;">
                 <h3 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-bottom: 1rem; text-transform: uppercase;">
-                    Director's Log // Today
+                    Director Sasha's Log // Today
                 </h3>
                 <p style="line-height: 1.8; color: var(--paper);">
-                    Agent SNOUT-7 has successfully infiltrated the Pigeon Coalition. After 3 weeks of surveillance, 
+                    Director Sasha here. Agent SNOUT-7 has successfully infiltrated the Pigeon Coalition. After 3 weeks of surveillance, 
                     we have confirmed they are just regular birds and not, as previously theorized, miniature surveillance 
                     drones. However, Agent WHISKERS-9 maintains they are "up to something" and refuses to stand down. 
                     <br><br>
@@ -691,7 +691,7 @@
     </div>
     
     <footer class="footer">
-        <p>THE BORZOI BUREAU • CANINE INTELLIGENCE DIVISION</p>
+        <p>THE BORZOI BUREAU • DIRECTOR SASHA VOLKOV</p>
         <p style="margin-top: 0.5rem; font-size: 0.7rem;">
             Unauthorized access is punishable by excessive face licking.
         </p>
@@ -700,6 +700,18 @@
     <script>
         // Agent database
         const agents = [
+            {
+                codename: "DIRECTOR",
+                realName: "Sasha Volkov",
+                clearance: "LEVEL 10",
+                specialty: "Bureau Administration",
+                image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop",
+                status: "Command",
+                missions: 999,
+                description: "Founder and Director of the Borzoi Bureau. Known for her piercing gaze and ability to nap while maintaining complete situational awareness. Holds the record for longest snoot in agency history.",
+                skills: ["Strategic Napping", "Bureaucratic Maneuvering", "Treat Allocation", "Intimidation via Staring"],
+                weaknesses: ["The Vacuum", "Thunderstorms", "Social Gatherings"]
+            },
             {
                 codename: "SNOUT-7",
                 realName: "Vladimir Longsnootovich",
@@ -819,7 +831,7 @@
             const grid = document.getElementById('agentGrid');
             grid.innerHTML = agents.map((agent, index) => `
                 <div class="agent-card" onclick="showAgentModal(${index})">
-                    <div class="agent-photo">🐕‍🦺</div>
+                    <div class="agent-photo" style="background: url('${agent.image || "https://placedog.net/400/300?id=" + (index + 1)}') center/cover, var(--black);">${agent.image ? '' : '🐕‍🦺'}</div>
                     <div class="agent-info">
                         <div class="agent-codename">${agent.codename}</div>
                         <div class="agent-realname">${agent.realName}</div>
@@ -836,7 +848,7 @@
             
             modalBody.innerHTML = `
                 <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <div style="font-size: 6rem;">🐕‍🦺</div>
+                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 3px solid var(--gold); background: url('${agent.image || "https://placedog.net/400/400?id=" + (index + 1)}') center/cover, var(--black);"></div>
                     <h2 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-top: 1rem;">
                         ${agent.codename}
                     </h2>
