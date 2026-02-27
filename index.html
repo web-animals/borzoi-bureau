@@ -373,7 +373,7 @@
             background-position: center;
         }
         
-        .feed-content[style*="benny-soviet.jpg"]::after { display: none; }
+        .feed-content[style*="benny.jpg"]::after { display: none; }
         
         .feed-content::after {
             content: "NO SIGNAL";
@@ -749,6 +749,7 @@
         ];
         
         const comms = [
+            { sender: "INTEL DIVISION ⚠️ URGENT", time: "16:00", encrypted: "[CLASSIFIED IMAGE - EYES ONLY]", decrypted: "<div style='background:#660000; color:#fff; padding:10px; margin-bottom:10px; font-family:monospace; font-size:0.8rem;'>⚠️ THREAT ASSESSMENT PHOTOGRAPH ⚠️</div><img src='benny-soviet.jpg' style='width:100%; border:3px solid #ff0000; box-shadow:0 0 20px rgba(255,0,0,0.5);'><p style='margin-top:10px; font-size:0.8rem; color:#ff0000;'><i class='fas fa-exclamation-triangle'></i> This image is classified LEVEL 10. Distribution prohibited.</p>", isDecrypted: false, isImage: true },
             { sender: "AGENT SNOUT-7", time: "14:40", encrypted: "BARK BARK BARK WOOF", decrypted: "Squirrel in sector 4. Requesting backup. This is not a drill.", isDecrypted: false },
             { sender: "AGENT WHISKERS-9", time: "13:00", encrypted: "MEOW... wait", decrypted: "The pigeons are watching. I know they are. Send treats.", isDecrypted: false },
             { sender: "COMMAND", time: "12:00", encrypted: "WOOF WOOF GRRR", decrypted: "All agents: mailman approaching. Defensive positions.", isDecrypted: false },
@@ -888,7 +889,7 @@
                         <span>${f.isBenny ? '<i class="fas fa-exclamation-triangle"></i> ' : ''}${f.location}</span>
                         ${f.status === 'LIVE' ? '<div class="live-indicator"><div class="live-dot"></div>LIVE</div>' : '<span style="color: var(--light-gray);">NO SIGNAL</span>'}
                     </div>
-                    <div class="feed-content" style="${f.isBenny ? 'background-image: url(benny-soviet.jpg);' : ''}${f.isBenny ? ' --no-signal: none;' : ''}">
+                    <div class="feed-content" style="${f.isBenny ? 'background-image: url(benny.jpg);' : ''}${f.isBenny ? ' --no-signal: none;' : ''}">
                         ${f.isBenny ? '' : `<i class="fas fa-${f.icon}"></i>`}
                     </div>
                 </div>
@@ -904,7 +905,7 @@
                         <span class="comm-time">${c.time}</span>
                     </div>
                     <div class="comm-preview" id="comm-text-${index}">
-                        ${c.isDecrypted ? c.decrypted : `<i class="fas fa-lock"></i> ${c.encrypted}`}
+                        ${c.isDecrypted ? (c.isImage ? c.decrypted : c.decrypted) : `<i class="fas fa-lock"></i> ${c.encrypted}`}
                     </div>
                     ${!c.isDecrypted ? `<button class="decrypt-btn" onclick="decryptMessage(${index})"><i class="fas fa-unlock"></i> DECRYPT</button>` : ''}
                 </div>
