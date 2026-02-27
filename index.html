@@ -645,7 +645,7 @@
             <div class="agent-grid">
                 <!-- Benny Dossier -->
                 <div class="agent-card" onclick="showThreatModal('benny')" style="border-color: #ff0000;">
-                    <div class="agent-photo" style="background-image: url('benny-redsquare.jpg'); background-position: center; border-color: #ff0000;"></div>
+                    <div class="agent-photo" style="background-image: url('benny-redsquare.jpg'); background-position: center top; border-color: #ff0000;"></div>
                     <div class="agent-info">
                         <div class="agent-codename" style="color: #ff0000;">BENNY "THE CLAW"</div>
                         <div class="agent-realname">Classification: FELINE</div>
@@ -963,6 +963,18 @@
         }
         
         const threats = {
+            benny: {
+                name: 'BENNY "THE CLAW"',
+                image: "benny-redsquare.jpg",
+                classification: "FELINE - STRATEGIC THREAT",
+                threatLevel: "MAXIMUM",
+                description: "Former house pet turned international operative. Benny has been photographed in Moscow's Red Square wearing military uniform. Intelligence suggests he's building a feline army with connections to the Kremlin.",
+                crimes: ["Posing for propaganda photos in Red Square", "Wearing unauthorized military uniform", "Building international feline network", "Staring contests with St. Basil's Cathedral"],
+                psychologicalProfile: "Highly intelligent. Speaks in riddles. Claims to have 'diplomatic immunity' due to his nine lives.",
+                knownAssociates: "Alfie (enforcer), Unknown Kremlin contacts",
+                lastSeen: "Red Square, Moscow. Posing for dramatic photos.",
+                weaknesses: "Laser pointers (brief distraction), Western tuna sanctions"
+            },
             
             alfie: {
                 name: 'ALFIE "THE MAD"',
