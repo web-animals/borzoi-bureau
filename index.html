@@ -643,17 +643,6 @@
             </div>
             
             <div class="agent-grid">
-                <!-- Benny Dossier -->
-                <div class="agent-card" onclick="showThreatModal('benny')" style="border-color: #ff0000;">
-                    <div class="agent-photo" style="background-image: url('benny.jpg'); border-color: #ff0000;"></div>
-                    <div class="agent-info">
-                        <div class="agent-codename" style="color: #ff0000;">BENNY "THE CLAW"</div>
-                        <div class="agent-realname">Classification: FELINE</div>
-                        <span class="agent-clearance" style="background: #ff0000;">THREAT LEVEL: MAXIMUM</span>
-                        <div class="agent-specialty">Psychological Warfare, Surveillance Counter-Ops</div>
-                    </div>
-                </div>
-                
                 <!-- Alfie Dossier -->
                 <div class="agent-card" onclick="showThreatModal('alfie')" style="border-color: #ff6600;">
                     <div class="agent-photo" style="background-image: url('alfie.jpg'); background-position: center; border-color: #ff6600;"></div>
@@ -717,24 +706,9 @@
                 <h3 style="color: #ff0000; font-family: 'Share Tech Mono', monospace; margin-bottom: 1rem;">
                     <i class="fas fa-camera"></i> SURVEILLANCE PHOTOGRAPHY
                 </h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    <div style="background: #000; border: 1px solid #ff0000; padding: 0.5rem;">
-                        <div style="aspect-ratio: 4/3; background: url('benny.jpg') center/cover; margin-bottom: 0.5rem;"></div>
-                        <p style="font-size: 0.8rem; color: var(--light-gray); margin: 0; font-family: 'Share Tech Mono', monospace;">PHOTO 001: Subject B</p>
-                    </div>
-                    <div style="background: #000; border: 1px solid #ff0000; padding: 0.5rem;">
-                        <div style="aspect-ratio: 4/3; background: url('benny-soviet.jpg') center/cover; margin-bottom: 0.5rem;"></div>
-                        <p style="font-size: 0.8rem; color: var(--light-gray); margin: 0; font-family: 'Share Tech Mono', monospace;">PHOTO 002: Subject B (Military)</p>
-                    </div>
-                    <div style="background: #000; border: 1px solid #ff6600; padding: 0.5rem;">
-                        <div style="aspect-ratio: 4/3; background: url('alfie.jpg') center/cover; margin-bottom: 0.5rem;"></div>
-                        <p style="font-size: 0.8rem; color: var(--light-gray); margin: 0; font-family: 'Share Tech Mono', monospace;">PHOTO 003: Subject A (Alfie)</p>
-                    </div>
-                    <div style="background: #000; border: 1px solid #ff6600; padding: 0.5rem;">
-                        <div style="aspect-ratio: 4/3; background: url('benny-alfie.jpg') center/cover; margin-bottom: 0.5rem;"></div>
-                        <p style="font-size: 0.8rem; color: var(--light-gray); margin: 0; font-family: 'Share Tech Mono', monospace;">PHOTO 004: Subjects B&A (Joint)</p>
-                    </div>
-                </div>
+                <p style="color: var(--light-gray); font-family: 'Share Tech Mono', monospace; text-align: center; padding: 2rem;">
+                    <i class="fas fa-lock"></i> [REDACTED - LEVEL 15 CLEARANCE REQUIRED] <i class="fas fa-lock"></i>
+                </p>
             </div>
         </section>
     </div>
@@ -978,18 +952,7 @@
         }
         
         const threats = {
-            benny: {
-                name: 'BENNY "THE CLAW"',
-                image: "sasha.jpg",
-                classification: "FELINE - STRATEGIC THREAT",
-                threatLevel: "MAXIMUM",
-                description: "Former house pet turned criminal mastermind. Benny operates a sophisticated feline intelligence network from an undisclosed location (the neighbor's garage). Known for his patience and ability to stare at agents for hours without blinking.",
-                crimes: ["Wiretapping the treat cabinet", "Smuggling catnip across state lines", "Operating an unauthorized laser pointer", "Tax evasion (nine lives, one tax return)"],
-                psychologicalProfile: "Highly intelligent. Speaks in riddles. Claims to have 'seen the other side of the door' and describes it as 'disappointing.'",
-                knownAssociates: "Alfie (enforcer), The Pigeon Coalition (rivals)",
-                lastSeen: "Kitchen counter, 0400 hours. Left paw prints on classified documents.",
-                weaknesses: "Laser pointers (brief distraction), Tuna (temporary ally)"
-            },
+            
             alfie: {
                 name: 'ALFIE "THE MAD"',
                 image: "alfie.jpg",
