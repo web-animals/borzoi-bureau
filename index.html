@@ -561,6 +561,7 @@
         <button id="nav-missions" onclick="showSection('missions')">Missions</button>
         <button id="nav-surveillance" onclick="showSection('surveillance')">Surveillance</button>
         <button id="nav-comms" onclick="showSection('comms')">Intercept</button>
+        <button id="nav-threats" onclick="showSection('threats')" style="color: #ff0000;">Threats</button>
     </nav>
     
     <div class="container">
@@ -629,6 +630,58 @@
         <!-- Communications -->
         <section id="comms" class="section">
             <div class="comm-list" id="commList"></div>
+        </section>
+        
+        <!-- Threats -->
+        <section id="threats" class="section">
+            <div style="background: #660000; border: 3px solid #ff0000; padding: 1.5rem; margin-bottom: 2rem; text-align: center;">
+                <h2 style="color: #ff0000; font-family: 'Share Tech Mono', monospace; margin: 0;">
+                    <i class="fas fa-skull"></i> PERSONS OF INTEREST <i class="fas fa-skull"></i>
+                </h2>
+                <p style="color: #fff; margin-top: 0.5rem;">CLASSIFIED THREAT ASSESSMENT // DO NOT APPROACH</p>
+            </div>
+            
+            <div class="agent-grid">
+                <!-- Benny Dossier -->
+                <div class="agent-card" onclick="showThreatModal('benny')" style="border-color: #ff0000;">
+                    <div class="agent-photo" style="background-image: url('benny.jpg'); border-color: #ff0000;"></div>
+                    <div class="agent-info">
+                        <div class="agent-codename" style="color: #ff0000;">BENNY "THE CLAW"</div>
+                        <div class="agent-realname">Classification: FELINE</div>
+                        <span class="agent-clearance" style="background: #ff0000;">THREAT LEVEL: MAXIMUM</span>
+                        <div class="agent-specialty">Psychological Warfare, Surveillance Counter-Ops</div>
+                    </div>
+                </div>
+                
+                <!-- Alfie Dossier -->
+                <div class="agent-card" onclick="showThreatModal('alfie')" style="border-color: #ff6600;">
+                    <div class="agent-photo" style="background-image: url('benny-alfie.jpg'); background-position: top center; border-color: #ff6600;"></div>
+                    <div class="agent-info">
+                        <div class="agent-codename" style="color: #ff6600;">ALFIE "THE MAD"</div>
+                        <div class="agent-realname">Classification: FELINE - UNSTABLE</div>
+                        <span class="agent-clearance" style="background: #ff6600;">THREAT LEVEL: UNHINGED</span>
+                        <div class="agent-specialty">Chaos Operations, Vodka-Fueled Rampages</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: var(--gray); border: 2px solid #ff0000; padding: 1.5rem; margin-top: 2rem;">
+                <h3 style="color: #ff0000; font-family: 'Share Tech Mono', monospace; margin-bottom: 1rem;">
+                    <i class="fas fa-exclamation-triangle"></i> INCIDENT REPORT #734-B
+                </h3>
+                <p style="line-height: 1.8;">
+                    At approximately 0300 hours, surveillance cameras captured Benny and Alfie in what appears to be 
+                    a <span style="background: #000; color: #000;">[REDACTED]</span> basement, surrounded by empty vodka bottles, 
+                    stacks of rubles, and what agents describe as "concerning amounts of weaponry."
+                    <br><br>
+                    Alfie was reportedly screaming something about "taking over the living room" and "the dogs will pay." 
+                    Benny appeared to be the calmer of the two, meticulously counting money while wearing his signature ushanka.
+                    <br><br>
+                    <strong style="color: #ff0000;">UPDATE:</strong> Alfie has been designated CODE CRIMSON after the 
+                    <span style="background: #000; color: #000;">[INCIDENT REDACTED]</span> at the previous safe house. 
+                    He is to be considered extremely unpredictable and possibly immortal.
+                </p>
+            </div>
         </section>
     </div>
     
@@ -868,6 +921,83 @@
         
         function closeModal() {
             document.getElementById('agentModal').classList.remove('active');
+        }
+        
+        const threats = {
+            benny: {
+                name: "BENNY "THE CLAW"",
+                image: "benny.jpg",
+                classification: "FELINE - STRATEGIC THREAT",
+                threatLevel: "MAXIMUM",
+                description: "Former house pet turned criminal mastermind. Benny operates a sophisticated feline intelligence network from an undisclosed location (the neighbor's garage). Known for his patience and ability to stare at agents for hours without blinking.",
+                crimes: ["Wiretapping the treat cabinet", "Smuggling catnip across state lines", "Operating an unauthorized laser pointer", "Tax evasion (nine lives, one tax return)"],
+                psychologicalProfile: "Highly intelligent. Speaks in riddles. Claims to have 'seen the other side of the door' and describes it as 'disappointing.'",
+                knownAssociates: "Alfie (enforcer), The Pigeon Coalition (rivals)",
+                lastSeen: "Kitchen counter, 0400 hours. Left paw prints on classified documents.",
+                weaknesses: "Laser pointers (brief distraction), Tuna (temporary ally)"
+            },
+            alfie: {
+                name: "ALFIE "THE MAD"",
+                image: "benny-alfie.jpg",
+                classification: "FELINE - UNSTABLE / POSSIBLY SUPERNATURAL",
+                threatLevel: "UNHINGED",
+                description: "WARNING: Alfie is not a normal cat. Alfie may not even be a cat. Alfie is what happens when you give a feline unlimited vodka and a complete disregard for physics. He has been banned from three dimensions.",
+                crimes: ["The Red Dot Incident (never forget)", "Declaring war on gravity (ongoing)", "Vodka smuggling operation", "Building a cat army in the basement", "Whispering secrets to houseplants", "STILL AT LARGE"],
+                psychologicalProfile: "ABSOLUTELY BONKERS. Alfie believes he is a 16th century Russian tsar reincarnated as a cat. He speaks in third person exclusively. Has been observed walking on walls, defying all known laws of feline behavior. Claims the vacuum cleaner is his 'ancient enemy from the before-times.'",
+                knownAssociates: "Benny (handler), A suspicious crow named 'Gregory', The Ghost of Christmas Past",
+                lastSeen: "On the ceiling. Yes, the ceiling. We don't know how either.",
+                weaknesses: "None confirmed. Possibly susceptible to catnip-dosed vodka, but attempts to deliver have resulted in... casualties."
+            }
+        };
+        
+        function showThreatModal(threatId) {
+            const threat = threats[threatId];
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 5px solid #ff0000; background-image: url('${threat.image}'); background-size: cover; background-position: center; box-shadow: 0 0 30px rgba(255,0,0,0.5);"></div>
+                    <h2 style="font-family: 'Share Tech Mono', monospace; color: #ff0000; margin-top: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">${threat.name}</h2>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Classification</div>
+                    <div class="dossier-value">${threat.classification}</div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Threat Level</div>
+                    <div class="dossier-value" style="color: #ff0000; font-size: 1.5rem; font-weight: bold;">${threat.threatLevel}</div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Psychological Profile</div>
+                    <div class="dossier-value" style="background: #1a0000; padding: 1rem; border-left: 3px solid #ff0000;">${threat.psychologicalProfile}</div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Known Crimes</div>
+                    <div class="dossier-value">
+                        ${threat.crimes.map(c => `<i class="fas fa-skull" style="color: #ff0000;"></i> ${c}`).join('<br>')}
+                    </div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Last Known Location</div>
+                    <div class="dossier-value" style="font-family: 'Share Tech Mono', monospace; color: #ff6600;">${threat.lastSeen}</div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Operational Weaknesses</div>
+                    <div class="dossier-value">${threat.weaknesses}</div>
+                </div>
+                
+                <div style="background: #ff0000; color: #fff; padding: 1rem; text-align: center; margin-top: 1rem; font-family: 'Share Tech Mono', monospace; font-weight: bold;">
+                    <i class="fas fa-exclamation-triangle"></i> DO NOT APPROACH - CALL IMMEDIATE BACKUP <i class="fas fa-exclamation-triangle"></i>
+                </div>
+            `;
+            
+            document.getElementById('agentModal').classList.add('active');
         }
         
         function renderMissions() {
