@@ -643,6 +643,17 @@
             </div>
             
             <div class="agent-grid">
+                <!-- Benny Dossier -->
+                <div class="agent-card" onclick="showThreatModal('benny')" style="border-color: #ff0000;">
+                    <div class="agent-photo" style="background-image: url('benny-redsquare.jpg'); background-position: center; border-color: #ff0000;"></div>
+                    <div class="agent-info">
+                        <div class="agent-codename" style="color: #ff0000;">BENNY "THE CLAW"</div>
+                        <div class="agent-realname">Classification: FELINE</div>
+                        <span class="agent-clearance" style="background: #ff0000;">THREAT LEVEL: MAXIMUM</span>
+                        <div class="agent-specialty">Psychological Warfare, Moscow Operations</div>
+                    </div>
+                </div>
+                
                 <!-- Alfie Dossier -->
                 <div class="agent-card" onclick="showThreatModal('alfie')" style="border-color: #ff6600;">
                     <div class="agent-photo" style="background-image: url('alfie.jpg'); background-position: center; border-color: #ff6600;"></div>
@@ -846,7 +857,7 @@
             { location: "Kitchen - Camera 4", status: "LIVE", icon: "utensils", isBenny: false },
             { location: "Bedroom - Camera 5", status: "NO SIGNAL", icon: "bed", isBenny: false },
             { location: "Dog Park - Drone 1", status: "LIVE", icon: "tree", isBenny: false },
-            { location: "THREAT DETECTED", status: "LIVE", icon: "cat", isBenny: true }
+            { location: "Borzoi Ops Center - Camera 6", status: "LIVE", icon: "shield-alt", isOpsCenter: true }
         ];
         
         function init() {
@@ -1032,12 +1043,12 @@
             const grid = document.getElementById('surveillanceGrid');
             grid.innerHTML = feeds.map(f => `
                 <div class="feed-item ${f.isBenny ? 'benny-feed' : ''}">
-                    <div class="feed-header ${f.isBenny ? 'benny-header' : ''}">
+                    <div class="feed-header ${f.isOpsCenter ? 'ops-header' : ''}">
                         <span>${f.isBenny ? '<i class="fas fa-exclamation-triangle"></i> ' : ''}${f.location}</span>
                         ${f.status === 'LIVE' ? '<div class="live-indicator"><div class="live-dot"></div>LIVE</div>' : '<span style="color: var(--light-gray);">NO SIGNAL</span>'}
                     </div>
-                    <div class="feed-content" style="${f.isBenny ? 'background-image: url(benny.jpg);' : ''}${f.isBenny ? ' --no-signal: none;' : ''}">
-                        ${f.isBenny ? '' : `<i class="fas fa-${f.icon}"></i>`}
+                    <div class="feed-content" style="${f.isOpsCenter ? 'background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; align-items: center; justify-content: center;' : ''}${f.isBenny ? ' --no-signal: none;' : ''}">
+                        ${f.isOpsCenter ? '<i class="fas fa-shield-alt" style="font-size: 4rem; color: var(--gold);"></i><div style="position: absolute; bottom: 10px; font-family: monospace; font-size: 0.7rem; color: var(--gold);">SECURE</div>' : `<i class="fas fa-${f.icon}"></i>`}
                     </div>
                 </div>
             `).join('');
