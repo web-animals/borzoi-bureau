@@ -3,444 +3,510 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>THE BORZOI BUREAU | Classified</title>
+    <title>FBI CASE FILE 100-BORZOI | CONFIDENTIAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Share+Tech+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Special+Elite&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --red: #cc0000;
-            --dark-red: #8b0000;
-            --gold: #ffd700;
-            --black: #0a0a0a;
-            --gray: #2a2a2a;
-            --light-gray: #888;
-            --paper: #f5f5dc;
+            --paper: #e8e4d9;
+            --paper-dark: #d4d0c5;
+            --ink: #1a1a1a;
+            --redacted: #000000;
+            --stamp-red: #b22222;
+            --stamp-blue: #1e3a5f;
+            --highlight: #ffeb3b;
         }
         
         body {
-            font-family: 'Crimson Text', serif;
-            background: var(--black);
-            color: var(--paper);
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            background: var(--paper);
+            color: var(--ink);
             min-height: 100vh;
             overflow-x: hidden;
+            line-height: 1.6;
         }
         
+        /* Aged paper texture */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+            background: 
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.01) 2px, rgba(0,0,0,0.01) 4px);
             pointer-events: none;
             z-index: 1000;
         }
         
-        .classified-banner {
-            background: var(--red);
-            color: var(--gold);
-            text-align: center;
-            padding: 0.5rem;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.9rem;
-            letter-spacing: 3px;
+        /* Classification stamps */
+        .stamp {
+            display: inline-block;
+            border: 3px solid var(--stamp-red);
+            color: var(--stamp-red);
+            padding: 0.3rem 0.8rem;
+            font-weight: bold;
             text-transform: uppercase;
-            border-bottom: 2px solid var(--gold);
-            animation: pulse 2s infinite;
+            letter-spacing: 3px;
+            transform: rotate(-5deg);
+            font-size: 0.9rem;
+            margin: 0.5rem;
+            background: rgba(178, 34, 34, 0.05);
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+        .stamp.blue {
+            border-color: var(--stamp-blue);
+            color: var(--stamp-blue);
+            background: rgba(30, 58, 95, 0.05);
+        }
+        
+        .stamp.rotate-right {
+            transform: rotate(5deg);
+        }
+        
+        .top-banner {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            border-bottom: 4px double var(--stamp-red);
         }
         
         .header {
-            background: linear-gradient(180deg, var(--gray) 0%, var(--black) 100%);
             padding: 2rem;
             text-align: center;
-            border-bottom: 3px solid var(--red);
+            border-bottom: 2px solid var(--ink);
+            position: relative;
+            background: var(--paper);
         }
         
-        .emblem {
-            width: 120px;
-            height: 120px;
+        .header-stamps {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .fbi-seal {
+            width: 100px;
+            height: 100px;
             margin: 0 auto 1rem;
-            border: 3px solid var(--gold);
+            border: 4px solid var(--stamp-blue);
             border-radius: 50%;
-            background: url('badge.jpg') center/cover, var(--dark-red);
-            box-shadow: 0 0 30px rgba(204, 0, 0, 0.5);
-            overflow: hidden;
+            background: var(--paper);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Special Elite', serif;
+            font-size: 0.6rem;
+            text-align: center;
+            line-height: 1.2;
+            color: var(--stamp-blue);
+            position: relative;
+        }
+        
+        .fbi-seal::before {
+            content: "★";
+            position: absolute;
+            top: 5px;
+            font-size: 1.2rem;
         }
         
         .header h1 {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 2.5rem;
-            letter-spacing: 8px;
+            font-family: 'Special Elite', serif;
+            font-size: 1.8rem;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            color: var(--gold);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            margin-bottom: 0.5rem;
         }
         
         .header .subtitle {
-            color: var(--light-gray);
-            font-style: italic;
-            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #444;
             letter-spacing: 2px;
         }
         
+        .file-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .file-info span {
+            border-bottom: 1px solid var(--ink);
+            padding: 0 0.5rem;
+        }
+        
         .nav {
-            background: var(--gray);
+            background: var(--paper-dark);
             display: flex;
             justify-content: center;
             gap: 0;
-            border-bottom: 1px solid var(--red);
+            border-bottom: 2px solid var(--ink);
             overflow-x: auto;
+            flex-wrap: wrap;
         }
         
         .nav button {
             background: transparent;
             border: none;
-            color: var(--light-gray);
-            padding: 1rem 1.5rem;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.85rem;
+            color: var(--ink);
+            padding: 1rem 1.2rem;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.75rem;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.3s;
-            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            border-right: 1px solid #999;
             white-space: nowrap;
-            -webkit-tap-highlight-color: rgba(0,0,0,0.2);
-            touch-action: manipulation;
+            position: relative;
         }
         
+        .nav button:last-child { border-right: none; }
+        
         .nav button:hover, .nav button.active {
-            color: var(--gold);
-            background: rgba(204, 0, 0, 0.2);
-            border-bottom-color: var(--red);
+            background: var(--ink);
+            color: var(--paper);
+        }
+        
+        .nav button.threat {
+            color: var(--stamp-red);
+            font-weight: bold;
+        }
+        
+        .nav button.threat:hover, .nav button.threat.active {
+            background: var(--stamp-red);
+            color: var(--paper);
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 2rem 1.5rem;
         }
         
         .section { display: none; }
-        .section.active { display: block; animation: fadeIn 0.5s ease; }
+        .section.active { display: block; }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+        /* Form styling */
+        .form-section {
+            background: var(--paper);
+            border: 2px solid var(--ink);
             margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, var(--gray) 0%, var(--black) 100%);
-            border: 1px solid var(--red);
-            border-radius: 4px;
-            padding: 1.5rem;
             position: relative;
-            overflow: hidden;
         }
         
-        .stat-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--red);
-        }
-        
-        .stat-card.benny {
-            border-color: #ff0000;
-            animation: borderPulse 1s infinite;
-        }
-        
-        @keyframes borderPulse {
-            0%, 100% { border-color: #ff0000; }
-            50% { border-color: #660000; }
-        }
-        
-        .stat-label {
-            font-family: 'Share Tech Mono', monospace;
+        .form-header {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 0.5rem 1rem;
             font-size: 0.8rem;
-            color: var(--light-gray);
-            text-transform: uppercase;
             letter-spacing: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--gold);
-            margin: 0.5rem 0;
-            font-family: 'Share Tech Mono', monospace;
+        .form-body {
+            padding: 1.5rem;
         }
         
-        .stat-value.benny-value {
-            color: #ff0000;
-            font-size: 1.8rem;
+        .form-row {
+            display: flex;
+            border-bottom: 1px solid #999;
+            margin-bottom: 0.5rem;
         }
         
-        .stat-status {
-            font-size: 0.9rem;
-            color: #00ff00;
-            font-family: 'Share Tech Mono', monospace;
+        .form-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #444;
+            min-width: 150px;
+            padding: 0.3rem 0;
         }
         
-        .stat-status.alert {
-            color: #ff0000;
-            animation: blink 1s infinite;
+        .form-value {
+            flex: 1;
+            padding: 0.3rem 0;
+            font-weight: bold;
         }
         
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        /* Redacted text */
+        .redacted {
+            background: var(--redacted);
+            color: var(--redacted);
+            padding: 0.1rem 0.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
         }
         
+        .redacted:hover, .redacted.revealed {
+            background: transparent;
+            color: var(--ink);
+        }
+        
+        .redacted-inline {
+            background: var(--redacted);
+            color: var(--redacted);
+            padding: 0 0.3rem;
+        }
+        
+        /* Typewritten text blocks */
+        .typewriter {
+            font-family: 'Courier Prime', monospace;
+            line-height: 1.8;
+            margin: 1rem 0;
+        }
+        
+        .typewriter p {
+            text-indent: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Agent cards as file folders */
         .agent-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
         }
         
-        .agent-card {
-            background: var(--gray);
-            border: 1px solid var(--light-gray);
-            border-radius: 4px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s;
-            -webkit-tap-highlight-color: rgba(0,0,0,0.2);
-            touch-action: manipulation;
-        }
-        
-        .agent-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(204, 0, 0, 0.3);
-        }
-        
-        .agent-photo {
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-            background-color: var(--black);
-            border-bottom: 2px solid var(--red);
-        }
-        
-        .agent-info {
-            padding: 1.5rem;
-        }
-        
-        .agent-codename {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 1.2rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .agent-realname {
-            color: var(--light-gray);
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
-        }
-        
-        .agent-clearance {
-            display: inline-block;
-            background: var(--red);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            font-size: 0.7rem;
-            font-family: 'Share Tech Mono', monospace;
-            margin-top: 0.5rem;
-            text-transform: uppercase;
-        }
-        
-        .agent-specialty {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--light-gray);
-            font-size: 0.9rem;
-            color: var(--paper);
-        }
-        
-        .mission-log {
-            background: var(--gray);
-            border: 1px solid var(--red);
-            border-radius: 4px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .mission-item {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--gray);
-            display: flex;
-            gap: 1rem;
-            align-items: start;
-        }
-        
-        .mission-item:last-child { border-bottom: none; }
-        
-        .mission-time {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--light-gray);
-            font-size: 0.8rem;
-            min-width: 60px;
-        }
-        
-        .mission-content { flex: 1; }
-        
-        .mission-status {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            text-transform: uppercase;
-        }
-        
-        .status-active { background: var(--red); color: white; }
-        .status-completed { background: #006400; color: white; }
-        .status-pending { background: #8b8000; color: white; }
-        .status-alert { background: #ff0000; color: white; animation: blink 0.5s infinite; }
-        
-        .surveillance-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        
-        .feed-item {
-            background: var(--gray);
-            border: 2px solid var(--dark-red);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .feed-item.benny-feed {
-            border-color: #ff0000;
-            animation: borderPulse 1s infinite;
-        }
-        
-        .feed-header {
-            background: var(--dark-red);
-            padding: 0.5rem 1rem;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .feed-header.benny-header {
-            background: #660000;
-        }
-        
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            color: #ff4444;
-        }
-        
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: #ff4444;
-            border-radius: 50%;
-            animation: blink 1s infinite;
-        }
-        
-        .feed-content {
-            aspect-ratio: 4/3;
-            background: var(--black);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
+        .agent-folder {
+            background: #f5f5dc;
+            border: 1px solid #999;
             position: relative;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .feed-content[style*="benny.jpg"]::after { display: none; }
-        
-        .feed-content::after {
-            content: "NO SIGNAL";
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--light-gray);
-            opacity: 0.5;
-        }
-        
-        .comm-list {
-            background: var(--gray);
-            border: 1px solid var(--red);
-            border-radius: 4px;
-        }
-        
-        .comm-item {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--gray);
             cursor: pointer;
             transition: all 0.2s;
         }
         
-        .comm-item:hover { background: rgba(204, 0, 0, 0.1); }
-        .comm-item:last-child { border-bottom: none; }
-        
-        .comm-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
+        .agent-folder::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            width: 80px;
+            height: 20px;
+            background: #e8e4d9;
+            border: 1px solid #999;
+            border-bottom: none;
         }
         
-        .comm-sender {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--gold);
+        .agent-folder:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
-        .comm-time {
-            color: var(--light-gray);
-            font-size: 0.8rem;
-        }
-        
-        .comm-preview {
-            color: var(--light-gray);
-            font-size: 0.9rem;
-        }
-        
-        .decrypt-btn {
-            margin-top: 0.5rem;
-            background: var(--red);
-            color: white;
-            border: none;
-            padding: 0.3rem 0.8rem;
-            font-family: 'Share Tech Mono', monospace;
+        .folder-tab {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--paper);
+            border: 1px solid #999;
+            border-bottom: none;
+            padding: 0.2rem 1rem;
             font-size: 0.7rem;
-            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .folder-body {
+            padding: 1.5rem;
+            border-top: 2px solid var(--ink);
+        }
+        
+        .agent-photo-container {
+            width: 100%;
+            height: 150px;
+            background: #ddd;
+            border: 1px solid #999;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .agent-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%) sepia(10%);
+        }
+        
+        .agent-photo-placeholder {
+            font-size: 3rem;
+            color: #666;
+        }
+        
+        .folder-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #444;
+            margin-bottom: 0.2rem;
+        }
+        
+        .folder-value {
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+        
+        /* Mission log */
+        .log-entry {
+            border-left: 3px solid var(--ink);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .log-entry::before {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            background: var(--ink);
+            border-radius: 50%;
+        }
+        
+        .log-entry.alert { border-left-color: var(--stamp-red); }
+        .log-entry.alert::before { background: var(--stamp-red); }
+        
+        .log-entry.completed { border-left-color: #2e7d32; }
+        .log-entry.completed::before { background: #2e7d32; }
+        
+        .log-time {
+            font-size: 0.75rem;
+            color: #666;
+            font-family: 'Courier Prime', monospace;
+        }
+        
+        .log-content {
+            margin-top: 0.3rem;
+        }
+        
+        .log-status {
+            display: inline-block;
+            font-size: 0.65rem;
+            padding: 0.1rem 0.5rem;
+            border: 1px solid;
+            margin-top: 0.5rem;
             text-transform: uppercase;
         }
         
+        .log-status.alert { 
+            border-color: var(--stamp-red); 
+            color: var(--stamp-red);
+            background: rgba(178, 34, 34, 0.1);
+        }
+        
+        /* Communications */
+        .comm-item {
+            border: 1px solid #999;
+            margin-bottom: 1rem;
+            background: var(--paper);
+        }
+        
+        .comm-header {
+            background: var(--paper-dark);
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #999;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+        }
+        
+        .comm-body {
+            padding: 1rem;
+        }
+        
+        .comm-encrypted {
+            font-family: 'Courier Prime', monospace;
+            letter-spacing: 2px;
+        }
+        
+        .decrypt-btn {
+            background: var(--ink);
+            color: var(--paper);
+            border: none;
+            padding: 0.3rem 1rem;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.7rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+        
+        .decrypt-btn:hover {
+            background: var(--stamp-blue);
+        }
+        
+        /* Surveillance photos */
+        .surveillance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .surveillance-photo {
+            border: 1px solid #999;
+            background: #222;
+            aspect-ratio: 4/3;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .surveillance-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.2);
+        }
+        
+        .photo-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.8);
+            color: var(--paper);
+            padding: 0.3rem 0.5rem;
+            font-size: 0.65rem;
+            font-family: 'Courier Prime', monospace;
+        }
+        
+        .photo-stamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.6rem;
+            color: var(--stamp-red);
+            border: 1px solid var(--stamp-red);
+            padding: 0.2rem 0.4rem;
+            transform: rotate(15deg);
+        }
+        
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0,0,0,0.8);
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -450,30 +516,22 @@
         .modal-overlay.active { display: flex; }
         
         .modal {
-            background: var(--gray);
-            border: 2px solid var(--gold);
-            border-radius: 4px;
+            background: var(--paper);
+            border: 2px solid var(--ink);
             max-width: 600px;
             width: 100%;
-            max-height: 80vh;
+            max-height: 90vh;
             overflow-y: auto;
             position: relative;
         }
         
         .modal-header {
-            background: var(--dark-red);
-            padding: 1rem 1.5rem;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--gold);
-        }
-        
-        .modal-title {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
         
         .modal-close {
@@ -486,240 +544,319 @@
         
         .modal-body { padding: 1.5rem; }
         
+        /* Dossier sections */
         .dossier-section {
             margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--gray);
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #999;
         }
         
         .dossier-section:last-child {
             border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
         }
         
         .dossier-label {
-            font-family: 'Share Tech Mono', monospace;
             font-size: 0.7rem;
-            color: var(--light-gray);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            color: #666;
             margin-bottom: 0.3rem;
         }
         
-        .dossier-value { font-size: 1.1rem; color: var(--paper); }
-        
-        .dossier-redacted {
-            background: var(--black);
-            color: var(--black);
-            padding: 0.2rem 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
+        /* Handwritten notes */
+        .handwritten {
+            font-family: 'Special Elite', serif;
+            color: #1e3a5f;
+            transform: rotate(-2deg);
+            margin: 1rem 0;
+            padding: 0.5rem;
+            border: 1px dashed #1e3a5f;
+            background: rgba(30, 58, 95, 0.05);
         }
         
-        .dossier-redacted:hover, .dossier-redacted.revealed {
-            background: transparent;
-            color: var(--paper);
-        }
-        
+        /* Footer */
         .footer {
             text-align: center;
             padding: 2rem;
-            border-top: 1px solid var(--gray);
-            color: var(--light-gray);
-            font-size: 0.8rem;
+            border-top: 2px solid var(--ink);
+            font-size: 0.75rem;
+            color: #666;
+        }
+        
+        .footer-stamps {
+            margin-bottom: 1rem;
         }
         
         @media (max-width: 768px) {
-            .header h1 { font-size: 1.5rem; letter-spacing: 4px; }
-            .nav { flex-wrap: wrap; }
-            .nav button { padding: 0.8rem 1rem; font-size: 0.75rem; }
-            .dashboard-grid, .agent-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.2rem; letter-spacing: 3px; }
+            .header-stamps { position: static; margin-bottom: 1rem; }
+            .nav button { padding: 0.8rem 0.6rem; font-size: 0.65rem; }
             .container { padding: 1rem; }
-            .stat-value { font-size: 2rem; }
-        }
-        
-        @media (pointer: coarse) {
-            .agent-card, .decrypt-btn { min-height: 44px; }
+            .form-row { flex-direction: column; }
+            .form-label { min-width: auto; }
         }
     </style>
 </head>
 <body>
-    <div class="classified-banner">
-        <i class="fas fa-exclamation-triangle"></i> TOP SECRET // EYES ONLY // NOFORN <i class="fas fa-exclamation-triangle"></i>
+    <div class="top-banner">
+        UNITED STATES DEPARTMENT OF JUSTICE • FEDERAL BUREAU OF INVESTIGATION
     </div>
     
     <header class="header">
-        <div class="emblem"></div>
-        <h1>The Borzoi Bureau</h1>
-        <p class="subtitle">Department of Long Snoot Operations • Est. 1952</p>
+        <div class="header-stamps">
+            <div class="stamp">CONFIDENTIAL</div>
+            <div class="stamp rotate-right">SECRET</div>
+        </div>
+        <div class="fbi-seal">
+            <div style="margin-top: 15px;">DEPARTMENT<br>OF JUSTICE<br>FBI</div>
+        </div>
+        <h1>THE BORZOI BUREAU</h1>
+        <p class="subtitle">CASE FILE 100-BORZOI | COUNTER-CANINE INTELLIGENCE DIVISION</p>
+        <div class="file-info">
+            <span>DATE: OCT 19, 1971</span>
+            <span>CASE NO: 100-106670</span>
+            <span>PAGES: 47</span>
+        </div>
     </header>
     
     <nav class="nav">
-        <button id="nav-dashboard" class="active" onclick="showSection('dashboard')">Command</button>
-        <button id="nav-agents" onclick="showSection('agents')">Operatives</button>
-        <button id="nav-missions" onclick="showSection('missions')">Missions</button>
-        <button id="nav-surveillance" onclick="showSection('surveillance')">Surveillance</button>
+        <button id="nav-dashboard" class="active" onclick="showSection('dashboard')">Case Summary</button>
+        <button id="nav-agents" onclick="showSection('agents')">Personnel Files</button>
+        <button id="nav-missions" onclick="showSection('missions')'>Activity Log</button>
+        <button id="nav-surveillance" onclick="showSection('surveillance')">Exhibits</button>
         <button id="nav-comms" onclick="showSection('comms')">Intercept</button>
-        <button id="nav-threats" onclick="showSection('threats')" style="color: #ff0000;">Threats</button>
-        <button id="nav-casefile" onclick="showSection('casefile')" style="color: #ff6600;"><i class="fas fa-folder-open"></i> Case File</button>
+        <button id="nav-threats" class="threat" onclick="showSection('threats')">POI Files</button>
+        <button id="nav-casefile" onclick="showSection('casefile')">Evidence</button>
     </nav>
     
     <div class="container">
-        <!-- Dashboard -->
+        <!-- Dashboard/Case Summary -->
         <section id="dashboard" class="section active">
-            <div class="dashboard-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Active Agents</div>
-                    <div class="stat-value">47</div>
-                    <div class="stat-status"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> OPERATIONAL</div>
+            <div class="form-section">
+                <div class="form-header">
+                    <span>SUBJECT: LONG SNOOT OPERATIONS</span>
+                    <span>FILE CLASSIFICATION: EYES ONLY</span>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Ongoing Missions</div>
-                    <div class="stat-value">12</div>
-                    <div class="stat-status alert"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> 3 CRITICAL</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Squirrels Spotted</div>
-                    <div class="stat-value">2,847</div>
-                    <div class="stat-status"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> TRACKING</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Treats Dispensed</div>
-                    <div class="stat-value"><i class="fas fa-infinity"></i></div>
-                    <div class="stat-status"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> UNLIMITED</div>
-                </div>
-                <div class="stat-card benny">
-                    <div class="stat-label">Benny Threat Level</div>
-                    <div class="stat-value benny-value">CRITICAL</div>
-                    <div class="stat-status alert"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> EVIL DETECTED</div>
+                <div class="form-body">
+                    <div class="form-row">
+                        <div class="form-label">Bureau Status</div>
+                        <div class="form-value">OPERATIONAL <span class="redacted">[REDACTED]</span></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Active Personnel</div>
+                        <div class="form-value">47 AGENTS <span class="redacted">[CLASSIFIED]</span></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Current Operations</div>
+                        <div class="form-value">12 ACTIVE / <span style="color: var(--stamp-red);">3 CRITICAL</span></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Threat Assessment</div>
+                        <div class="form-value" style="color: var(--stamp-red); font-weight: bold;">CRITICAL - BENNY SIGHTED</div>
+                    </div>
                 </div>
             </div>
             
-            <div style="background: var(--gray); border: 1px solid var(--red); border-radius: 4px; padding: 1.5rem;">
-                <h3 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-bottom: 1rem; text-transform: uppercase;">
-                    <i class="fas fa-file-alt"></i> Director Sasha's Log // Today
-                </h3>
-                <p style="line-height: 1.8; color: var(--paper);">
-                    Director Sasha here. Agent SNOUT-7 has successfully infiltrated the Pigeon Coalition. After 3 weeks of surveillance, 
-                    we have confirmed they are just regular birds and not, as previously theorized, miniature surveillance 
-                    drones. However, Agent WHISKERS-9 maintains they are "up to something" and refuses to stand down.
-                    <br><br>
-                    <strong style="color: #ff0000;">PRIORITY ALERT:</strong> EVIL BENNY has been sighted near the perimeter. 
-                    All agents are on high alert. This is not a drill.
-                    <br><br>
-                    Operation: LONG NOSE continues as planned. The mailman remains unaware of our presence.
-                </p>
+            <div class="form-section">
+                <div class="form-header">
+                    <span>DIRECTOR'S CASE NOTES</span>
+                    <span>PREPARED BY: SASHA VOLKOV</span>
+                </div>
+                <div class="form-body">
+                    <div class="typewriter">
+                        <p>Agent SNOUT-7 has successfully infiltrated the Pigeon Coalition. After 3 weeks of surveillance, we have confirmed they are just regular birds and not, as previously theorized, miniature surveillance drones deployed by <span class="redacted">[REDACTED]</span>. However, Agent WHISKERS-9 maintains they are "up to something" and refuses to stand down.</p>
+                        
+                        <p><strong style="color: var(--stamp-red);">PRIORITY ALERT:</strong> Subject BENNY has been sighted near the perimeter. All agents are on high alert. This is not a drill. Subject shows advanced intelligence and appears to be coordinating with <span class="redacted">[FOREIGN ASSET]</span>.</p>
+                        
+                        <p>Operation: LONG NOSE continues as planned. The mailman remains unaware of our presence. His daily delivery patterns have been logged and analyzed.</p>
+                    </div>
+                    
+                    <div class="handwritten">
+                        <i class="fas fa-pen"></i> Handwritten note: "The vacuum cleaner is still our greatest enemy. Suggest immediate R&D on countermeasures. - S"
+                    </div>
+                    
+                    <div style="margin-top: 1rem; font-size: 0.75rem; color: #666;">
+                        EXEMPTION CODES: (b)(1), (b)(7)(C), (b)(7)(D)
+                    </div>
+                </div>
             </div>
         </section>
         
-        <!-- Agents -->
+        <!-- Agents/Personnel Files -->
         <section id="agents" class="section">
-            <div class="agent-grid" id="agentGrid"></div>
+            <div class="form-section">
+                <div class="form-header">
+                    <span>PERSONNEL DOSSIERS</span>
+                    <span> clearance required</span>
+                </div>
+                <div class="form-body">
+                    <div class="agent-grid" id="agentGrid"></div>
+                </div>
+            </div>
         </section>
         
-        <!-- Missions -->
+        <!-- Missions/Activity Log -->
         <section id="missions" class="section">
-            <div class="mission-log" id="missionLog"></div>
+            <div class="form-section">
+                <div class="form-header">
+                    <span>FIELD ACTIVITY LOG</span>
+                    <span>DATE RANGE: 24 HOURS</span>
+                </div>
+                <div class="form-body" id="missionLog"></div>
+            </div>
         </section>
         
-        <!-- Surveillance -->
+        <!-- Surveillance/Exhibits -->
         <section id="surveillance" class="section">
-            <div class="surveillance-grid" id="surveillanceGrid"></div>
+            <div class="form-section">
+                <div class="form-header">
+                    <span>SURVEILLANCE EXHIBITS</span>
+                    <span>CONFIDENTIAL - NOT FOR DISCLOSURE</span>
+                </div>
+                <div class="form-body">
+                    <div class="surveillance-grid">
+                        <div class="surveillance-photo">
+                            <img src="badge.jpg" alt="Bureau Seal">
+                            <div class="photo-label">EXHIBIT A-1: BUREAU BADGE</div>
+                        </div>
+                        <div class="surveillance-photo">
+                            <img src="sasha.jpg" alt="Director">
+                            <div class="photo-label">EXHIBIT A-2: DIR. VOLKOV</div>
+                        </div>
+                        <div class="surveillance-photo">
+                            <img src="benny-redsquare.jpg" alt="Subject Benny">
+                            <div class="photo-label" style="color: var(--stamp-red);">EXHIBIT B-1: SUBJECT BENNY</div>
+                            <div class="photo-stamp">THREAT</div>
+                        </div>
+                        <div class="surveillance-photo">
+                            <img src="alfie.jpg" alt="Subject Alfie">
+                            <div class="photo-label" style="color: var(--stamp-red);">EXHIBIT B-2: SUBJECT ALFIE</div>
+                            <div class="photo-stamp">UNSTABLE</div>
+                        </div>
+                        <div class="surveillance-photo">
+                            <img src="benny-alfie.jpg" alt="Both subjects">
+                            <div class="photo-label" style="color: var(--stamp-red);">EXHIBIT B-3: ASSOCIATES</div>
+                        </div>
+                        <div class="surveillance-photo">
+                            <img src="benny-soviet.jpg" alt="Soviet connection">
+                            <div class="photo-label" style="color: var(--stamp-red);">EXHIBIT C-1: FOREIGN OPS</div>
+                        </div>
+                        <div class="surveillance-photo">
+                            <img src="exhibit-a.jpg" alt="Evidence">
+                            <div class="photo-label">EXHIBIT D-1: CONTRABAND</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
         
-        <!-- Communications -->
+        <!-- Communications/Intercept -->
         <section id="comms" class="section">
-            <div class="comm-list" id="commList"></div>
+            <div class="form-section">
+                <div class="form-header">
+                    <span>INTERCEPTED COMMUNICATIONS</span>
+                    <span>WARRANT NO. 71-W-4482</span>
+                </div>
+                <div class="form-body" id="commList"></div>
+            </div>
         </section>
         
-        <!-- Threats -->
+        <!-- Threats/POI Files -->
         <section id="threats" class="section">
-            <div style="background: #660000; border: 3px solid #ff0000; padding: 1.5rem; margin-bottom: 2rem; text-align: center;">
-                <h2 style="color: #ff0000; font-family: 'Share Tech Mono', monospace; margin: 0;">
-                    <i class="fas fa-skull"></i> PERSONS OF INTEREST <i class="fas fa-skull"></i>
-                </h2>
-                <p style="color: #fff; margin-top: 0.5rem;">CLASSIFIED THREAT ASSESSMENT // DO NOT APPROACH</p>
-            </div>
-            
-            <div class="agent-grid">
-                <!-- Benny Dossier -->
-                <div class="agent-card" onclick="showThreatModal('benny')" style="border-color: #ff0000;">
-                    <div class="agent-photo" style="background-image: url('benny-redsquare.jpg'); background-position: center top; border-color: #ff0000;"></div>
-                    <div class="agent-info">
-                        <div class="agent-codename" style="color: #ff0000;">BENNY "THE CLAW"</div>
-                        <div class="agent-realname">Classification: FELINE</div>
-                        <span class="agent-clearance" style="background: #ff0000;">THREAT LEVEL: MAXIMUM</span>
-                        <div class="agent-specialty">Psychological Warfare, Moscow Operations</div>
+            <div class="form-section" style="border-color: var(--stamp-red);">
+                <div class="form-header" style="background: var(--stamp-red);">
+                    <span>PERSONS OF INTEREST - MAXIMUM THREAT LEVEL</span>
+                    <span>DO NOT APPROACH</span>
+                </div>
+                <div class="form-body">
+                    <div class="agent-grid">
+                        <div class="agent-folder" onclick="showThreatModal('benny')" style="border-color: var(--stamp-red);">
+                            <div class="folder-tab" style="background: #ffcccc;">FILE B-001</div>
+                            <div class="folder-body" style="border-color: var(--stamp-red);">
+                                <div class="agent-photo-container">
+                                    <img src="benny-redsquare.jpg" class="agent-photo" alt="Benny">
+                                </div>
+                                <div class="folder-label">Codename</div>
+                                <div class="folder-value" style="color: var(--stamp-red);">BENNY "THE CLAW"</div>
+                                <div class="folder-label">Classification</div>
+                                <div class="folder-value">FELINE - STRATEGIC THREAT</div>
+                                <div class="folder-label">Threat Level</div>
+                                <div class="folder-value" style="color: var(--stamp-red);">MAXIMUM</div>
+                            </div>
+                        </div>
+                        
+                        <div class="agent-folder" onclick="showThreatModal('alfie')" style="border-color: #ff6600;">
+                            <div class="folder-tab" style="background: #ffe4cc;">FILE B-002</div>
+                            <div class="folder-body" style="border-color: #ff6600;">
+                                <div class="agent-photo-container">
+                                    <img src="alfie.jpg" class="agent-photo" alt="Alfie">
+                                </div>
+                                <div class="folder-label">Codename</div>
+                                <div class="folder-value" style="color: #ff6600;">ALFIE "THE MAD"</div>
+                                <div class="folder-label">Classification</div>
+                                <div class="folder-value">FELINE - UNSTABLE</div>
+                                <div class="folder-label">Threat Level</div>
+                                <div class="folder-value" style="color: #ff6600;">UNHINGED</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section" style="margin-top: 2rem; border-color: var(--stamp-red);">
+                        <div class="form-header" style="background: var(--stamp-red);">
+                            <span>INCIDENT REPORT #734-B</span>
+                            <span>CLASSIFIED</span>
+                        </div>
+                        <div class="form-body">
+                            <div class="typewriter">
+                                <p>At approximately 0300 hours, surveillance cameras captured Subjects BENNY and ALFIE in what appears to be a <span class="redacted">[LOCATION REDACTED]</span> basement, surrounded by empty vodka bottles, stacks of rubles, and what agents describe as "concerning amounts of weaponry."</p>
+                                
+                                <p>Subject ALFIE was reportedly screaming something about "taking over the living room" and "the dogs will pay." Subject BENNY appeared to be the calmer of the two, meticulously counting money while wearing his signature ushanka.</p>
+                            </div>
+                            <div class="handwritten">
+                                <i class="fas fa-pen"></i> "These cats are not normal. Recommend immediate escalation. - Agent PAW-12"
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Alfie Dossier -->
-                <div class="agent-card" onclick="showThreatModal('alfie')" style="border-color: #ff6600;">
-                    <div class="agent-photo" style="background-image: url('alfie.jpg'); background-position: center; border-color: #ff6600;"></div>
-                    <div class="agent-info">
-                        <div class="agent-codename" style="color: #ff6600;">ALFIE "THE MAD"</div>
-                        <div class="agent-realname">Classification: FELINE - UNSTABLE</div>
-                        <span class="agent-clearance" style="background: #ff6600;">THREAT LEVEL: UNHINGED</span>
-                        <div class="agent-specialty">Chaos Operations, Vodka-Fueled Rampages</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="background: var(--gray); border: 2px solid #ff0000; padding: 1.5rem; margin-top: 2rem;">
-                <h3 style="color: #ff0000; font-family: 'Share Tech Mono', monospace; margin-bottom: 1rem;">
-                    <i class="fas fa-exclamation-triangle"></i> INCIDENT REPORT #734-B
-                </h3>
-                <p style="line-height: 1.8;">
-                    At approximately 0300 hours, surveillance cameras captured Benny and Alfie in what appears to be 
-                    a <span style="background: #000; color: #000;">[REDACTED]</span> basement, surrounded by empty vodka bottles, 
-                    stacks of rubles, and what agents describe as "concerning amounts of weaponry."
-                    <br><br>
-                    Alfie was reportedly screaming something about "taking over the living room" and "the dogs will pay." 
-                    Benny appeared to be the calmer of the two, meticulously counting money while wearing his signature ushanka.
-                    <br><br>
-                    <strong style="color: #ff0000;">UPDATE:</strong> Alfie has been designated CODE CRIMSON after the 
-                    <span style="background: #000; color: #000;">[INCIDENT REDACTED]</span> at the previous safe house. 
-                    He is to be considered extremely unpredictable and possibly immortal.
-                </p>
             </div>
         </section>
         
-        <!-- Case File -->
+        <!-- Case File/Evidence -->
         <section id="casefile" class="section">
-            <div style="position: relative; height: 350px; background: url('exhibit-a.jpg') center/cover; border: 3px solid #ff0000; margin-bottom: 2rem;">
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.95)); padding: 2rem;">
-                    <h1 style="font-family: 'Share Tech Mono', monospace; color: #ff0000; font-size: 2rem; margin: 0; text-shadow: 2px 2px 4px #000;">
-                        <i class="fas fa-folder-open"></i> CASE FILE: OPERATION NINE LIVES
-                    </h1>
-                    <p style="color: #fff; margin: 0.5rem 0 0 0; font-family: 'Share Tech Mono', monospace;">SUBJECTS: BENNY & ALFIE // CLASSIFICATION: EYES ONLY</p>
-                    <p style="color: var(--light-gray); margin: 0.3rem 0 0 0; font-size: 0.8rem; font-style: italic;">Surveillance footage: Subjects photographed with contraband</p>
+            <div class="form-section">
+                <div class="form-header">
+                    <span>CASE FILE: OPERATION NINE LIVES</span>
+                    <span>EVIDENCE SUMMARY</span>
                 </div>
-                <div style="position: absolute; top: 10px; right: 10px; background: #ff0000; color: #000; padding: 0.5rem 1rem; font-family: 'Share Tech Mono', monospace; font-weight: bold; transform: rotate(5deg); border: 2px solid #000;">
-                    TOP SECRET
+                <div class="form-body">
+                    <div style="border: 2px solid var(--ink); margin-bottom: 2rem; position: relative;">
+                        <img src="exhibit-a.jpg" style="width: 100%; display: block; filter: grayscale(30%);" alt="Exhibit A">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.9); color: var(--paper); padding: 1rem;">
+                            <strong>EXHIBIT A</strong> - Subjects photographed with contraband
+                        </div>
+                        <div class="photo-stamp" style="top: 20px; right: 20px; font-size: 0.8rem; border-width: 2px;">TOP SECRET</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-label">Case Opened</div>
+                        <div class="form-value"><span class="redacted">██/██/████</span></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Lead Agent</div>
+                        <div class="form-value">SASHA VOLKOV <span class="redacted">[PERSONNEL FILE]</span></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Current Status</div>
+                        <div class="form-value" style="color: var(--stamp-red);">ACTIVE INVESTIGATION</div>
+                    </div>
+                    
+                    <div class="typewriter" style="margin-top: 1.5rem;">
+                        <p>On <span class="redacted">██/██/████</span>, the Bureau initiated surveillance on two feline subjects operating in Sector 4. What began as routine monitoring has evolved into the largest counter-feline operation in Bureau history.</p>
+                    </div>
+                    
+                    <div class="stamp" style="margin-top: 2rem;">REVIEWED BY CLASSIFICATION</div>
+                    <div class="stamp blue rotate-right">MAR 15 1972</div>
                 </div>
-                <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.8); color: #ff0000; padding: 0.3rem 0.8rem; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; border: 1px solid #ff0000;">
-                    <i class="fas fa-camera"></i> EXHIBIT A
-                </div>
-            </div>
-            
-            <div style="background: var(--gray); border: 2px solid var(--red); padding: 1.5rem; margin-bottom: 1.5rem;">
-                <h3 style="color: var(--gold); font-family: 'Share Tech Mono', monospace; margin-bottom: 1rem;">
-                    <i class="fas fa-file-alt"></i> CASE SUMMARY
-                </h3>
-                <p style="line-height: 1.8; color: var(--paper);">
-                    On <span style="background: #000; color: #000;">██/██/████</span>, the Borzoi Bureau initiated surveillance on two feline subjects operating in Sector 4. 
-                    What began as routine monitoring has evolved into the largest counter-feline operation in Bureau history.
-                </p>
-            </div>
-            
-            <div style="background: #1a0000; border: 2px solid #ff0000; padding: 1.5rem;">
-                <h3 style="color: #ff0000; font-family: 'Share Tech Mono', monospace; margin-bottom: 1rem;">
-                    <i class="fas fa-camera"></i> SURVEILLANCE PHOTOGRAPHY
-                </h3>
-                <p style="color: var(--light-gray); font-family: 'Share Tech Mono', monospace; text-align: center; padding: 2rem;">
-                    <i class="fas fa-lock"></i> [REDACTED - LEVEL 15 CLEARANCE REQUIRED] <i class="fas fa-lock"></i>
-                </p>
             </div>
         </section>
     </div>
@@ -727,7 +864,7 @@
     <div class="modal-overlay" id="agentModal">
         <div class="modal">
             <div class="modal-header">
-                <span class="modal-title"><i class="fas fa-id-card"></i> Agent Dossier</span>
+                <span style="font-family: 'Special Elite', serif; letter-spacing: 2px;">PERSONNEL FILE</span>
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
             <div class="modal-body" id="modalBody"></div>
@@ -735,22 +872,24 @@
     </div>
     
     <footer class="footer">
-        <p><i class="fas fa-shield-alt"></i> THE BORZOI BUREAU • DIRECTOR SASHA ███████</p>
-        <p style="margin-top: 0.5rem; font-size: 0.7rem;">
-            Unauthorized access is punishable by excessive face licking.
-        </p>
+        <div class="footer-stamps">
+            <div class="stamp">DECLASSIFIED</div>
+            <div class="stamp blue">REVIEWED</div>
+        </div>
+        <p>FEDERAL BUREAU OF INVESTIGATION • DEPARTMENT OF JUSTICE</p>
+        <p style="margin-top: 0.5rem;">Unauthorized disclosure subject to penalties under 18 U.S.C. § 798</p>
     </footer>
 
     <script>
         const agents = [
             {
                 codename: "DIRECTOR",
-                realName: "Sasha <span style='background-color: #000; color: #000; padding: 2px 8px; font-family: monospace;'>VOLKOV</span>",
-                clearance: "LEVEL 10",
+                realName: "Sasha VOLKOV",
+                clearance: "LEVEL 10 - TOP SECRET",
                 specialty: "Bureau Administration",
                 status: "Command",
                 missions: 999,
-                image: "benny.jpg",
+                image: "sasha.jpg",
                 description: "Founder and Director of the Borzoi Bureau. Known for her piercing gaze and ability to nap while maintaining complete situational awareness. Holds the record for longest snoot in agency history.",
                 skills: ["Strategic Napping", "Bureaucratic Maneuvering", "Treat Allocation", "Intimidation via Staring"],
                 weaknesses: ["Shyness", "Social Gatherings", "Being the center of attention"]
@@ -758,11 +897,11 @@
             {
                 codename: "SNOUT-7",
                 realName: "Vladimir ███████████████",
-                clearance: "LEVEL 4",
+                clearance: "LEVEL 4 - CONFIDENTIAL",
                 specialty: "Counter-Squirrel Operations",
                 status: "Active",
                 missions: 47,
-                image: "https://placedog.net/400/300?id=1",
+                image: null,
                 description: "Elite operative with 47 confirmed squirrel sightings. Known for the longest snoot in the agency.",
                 skills: ["Extended Range Scent Detection", "Stealth Napping", "Treat Negotiation"],
                 weaknesses: ["The Vacuum Cleaner", "Thunder", "The Mailman"]
@@ -770,11 +909,11 @@
             {
                 codename: "WHISKERS-9",
                 realName: "Natasha ████████████",
-                clearance: "LEVEL 5",
+                clearance: "LEVEL 5 - SECRET",
                 specialty: "Avian Surveillance",
                 status: "Active",
                 missions: 23,
-                image: "https://placedog.net/400/300?id=2",
+                image: null,
                 description: "Convinced all birds are government surveillance drones. Has been staring at a pigeon for 6 hours.",
                 skills: ["Intense Staring", "Bird Identification", "Conspiracy Theorizing"],
                 weaknesses: ["Laser Pointers", "Squirrels (distraction)"]
@@ -782,11 +921,11 @@
             {
                 codename: "PAW-12",
                 realName: "Dmitri ██████",
-                clearance: "LEVEL 3",
+                clearance: "LEVEL 3 - CONFIDENTIAL",
                 specialty: "Mail Interdiction",
                 status: "Active",
                 missions: 89,
-                image: "https://placedog.net/400/300?id=3",
+                image: null,
                 description: "Veteran operative with the highest mail interception rate. The mailman fears him.",
                 skills: ["Bark Projection", "Doorbell Detection", "Package Inspection"],
                 weaknesses: ["The Dog Across the Street", "Belly Rubs"]
@@ -794,11 +933,11 @@
             {
                 codename: "TAIL-4",
                 realName: "Anastasia ██████████",
-                clearance: "LEVEL 4",
+                clearance: "LEVEL 4 - SECRET",
                 specialty: "Emotional Support Espionage",
                 status: "Deep Cover",
                 missions: 12,
-                image: "https://placedog.net/400/300?id=4",
+                image: null,
                 description: "Undercover as a regular pet. Her tail wags are actually coded messages.",
                 skills: ["Tail Morse Code", "Puppy Eyes", "Strategic Cuddling"],
                 weaknesses: ["Cannot resist treats", "Will betray mission for cheese"]
@@ -806,11 +945,11 @@
             {
                 codename: "NOSE-1",
                 realName: "Boris █████████",
-                clearance: "LEVEL 5",
+                clearance: "LEVEL 5 - SECRET",
                 specialty: "Scent Analysis",
                 status: "Active",
                 missions: 156,
-                image: "https://placedog.net/400/300?id=5",
+                image: null,
                 description: "The agency's top nose. Can identify a squirrel from 3 blocks away. Retired once, got bored.",
                 skills: ["Olfactory Intelligence", "Tracking", "Finding Lost Treats"],
                 weaknesses: ["Skunks", "His own farts"]
@@ -818,11 +957,11 @@
             {
                 codename: "SLEEP-8",
                 realName: "Svetlana ███████",
-                clearance: "LEVEL 2",
+                clearance: "LEVEL 2 - RESTRICTED",
                 specialty: "Strategic Napping",
                 status: "In Position",
                 missions: 8,
-                image: "https://placedog.net/400/300?id=6",
+                image: null,
                 description: "Appears to be sleeping. Is actually gathering intelligence through dreams.",
                 skills: ["REM Reconnaissance", "Strategic Snoring", "Dream Analysis"],
                 weaknesses: ["Actually just sleeping", "No actual intel gathered yet"]
@@ -830,7 +969,7 @@
         ];
         
         const missions = [
-            { time: "15:00", status: "alert", text: "PRIORITY ALERT: EVIL BENNY sighted near perimeter. All agents on high alert." },
+            { time: "15:00", status: "alert", text: "PRIORITY ALERT: Subject BENNY sighted near perimeter. All agents on high alert." },
             { time: "14:42", status: "active", text: "Agent SNOUT-7: Squirrel spotted at coordinates 40.7589, -73.9851. Pursuit initiated." },
             { time: "13:15", status: "completed", text: "Agent PAW-12: Successfully intercepted suspicious package. Contents: Amazon delivery. Threat level: Minimal." },
             { time: "12:30", status: "pending", text: "Agent WHISKERS-9: Requesting permission to continue bird surveillance. It has been 6 hours." },
@@ -841,7 +980,7 @@
         ];
         
         const comms = [
-            { sender: "INTEL DIVISION ⚠️ URGENT", time: "16:00", encrypted: "[CLASSIFIED IMAGE - EYES ONLY]", decrypted: "<div style='background:#660000; color:#fff; padding:10px; margin-bottom:10px; font-family:monospace; font-size:0.8rem;'>⚠️ THREAT ASSESSMENT PHOTOGRAPH ⚠️</div><img src='benny-soviet.jpg' style='width:100%; border:3px solid #ff0000; box-shadow:0 0 20px rgba(255,0,0,0.5);'><p style='margin-top:10px; font-size:0.8rem; color:#ff0000;'><i class='fas fa-exclamation-triangle'></i> This image is classified LEVEL 10. Distribution prohibited.</p>", isDecrypted: false, isImage: true },
+            { sender: "INTEL DIVISION", time: "16:00", encrypted: "[CLASSIFIED IMAGE - EYES ONLY]", decrypted: "<img src='benny-soviet.jpg' style='width:100%; filter: grayscale(30%);'><p style='margin-top:0.5rem; color: var(--stamp-red); font-size: 0.8rem;'><strong>THREAT ASSESSMENT:</strong> Subject photographed in Moscow operations.</p>", isDecrypted: false, isImage: true },
             { sender: "AGENT SNOUT-7", time: "14:40", encrypted: "BARK BARK BARK WOOF", decrypted: "Squirrel in sector 4. Requesting backup. This is not a drill.", isDecrypted: false },
             { sender: "AGENT WHISKERS-9", time: "13:00", encrypted: "MEOW... wait", decrypted: "The pigeons are watching. I know they are. Send treats.", isDecrypted: false },
             { sender: "COMMAND", time: "12:00", encrypted: "WOOF WOOF GRRR", decrypted: "All agents: mailman approaching. Defensive positions.", isDecrypted: false },
@@ -850,20 +989,9 @@
             { sender: "VET CLINIC", time: "09:00", encrypted: "[EXTERNAL SOURCE]", decrypted: "Annual checkup reminder. All agents dread this.", isDecrypted: false }
         ];
         
-        const feeds = [
-            { location: "Backyard - Camera 1", status: "LIVE", icon: "tree", isBenny: false },
-            { location: "Living Room - Camera 2", status: "LIVE", icon: "couch", isBenny: false },
-            { location: "Front Window - Camera 3", status: "LIVE", icon: "window-maximize", isBenny: false },
-            { location: "Kitchen - Camera 4", status: "LIVE", icon: "utensils", isBenny: false },
-            { location: "Bedroom - Camera 5", status: "NO SIGNAL", icon: "bed", isBenny: false },
-            { location: "Dog Park - Drone 1", status: "LIVE", icon: "tree", isBenny: false },
-            { location: "Borzoi Ops Center - Camera 6", status: "LIVE", icon: "shield-alt", isOpsCenter: true }
-        ];
-        
         function init() {
             renderAgents();
             renderMissions();
-            renderSurveillance();
             renderComms();
         }
         
@@ -878,13 +1006,18 @@
         function renderAgents() {
             const grid = document.getElementById('agentGrid');
             grid.innerHTML = agents.map((agent, index) => `
-                <div class="agent-card" onclick="showAgentModal(${index})">
-                    <div class="agent-photo" style="background-image: url('${agent.image}');"></div>
-                    <div class="agent-info">
-                        <div class="agent-codename">${agent.codename}</div>
-                        <div class="agent-realname">${agent.realName}</div>
-                        <span class="agent-clearance">${agent.clearance}</span>
-                        <div class="agent-specialty">${agent.specialty}</div>
+                <div class="agent-folder" onclick="showAgentModal(${index})">
+                    <div class="folder-tab">${agent.codename}</div>
+                    <div class="folder-body">
+                        <div class="agent-photo-container">
+                            ${agent.image ? `<img src="${agent.image}" class="agent-photo" alt="${agent.codename}">` : '<div class="agent-photo-placeholder"><i class="fas fa-user-secret"></i></div>'}
+                        </div>
+                        <div class="folder-label">Codename</div>
+                        <div class="folder-value">${agent.codename}</div>
+                        <div class="folder-label">Clearance</div>
+                        <div class="folder-value">${agent.clearance}</div>
+                        <div class="folder-label">Specialty</div>
+                        <div class="folder-value">${agent.specialty}</div>
                     </div>
                 </div>
             `).join('');
@@ -896,62 +1029,55 @@
             
             modalBody.innerHTML = `
                 <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 3px solid var(--gold); background-image: url('${agent.image}'); background-size: cover; background-position: center;"></div>
-                    <h2 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-top: 1rem;">${agent.codename}</h2>
+                    <div class="agent-photo-container" style="width: 150px; height: 150px; margin: 0 auto; border-radius: 50%; border: 3px solid var(--ink);">
+                        ${agent.image ? `<img src="${agent.image}" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%);" alt="${agent.codename}">` : '<div class="agent-photo-placeholder"><i class="fas fa-user-secret"></i></div>'}
+                    </div>
+                    <h2 style="font-family: 'Special Elite', serif; margin-top: 1rem;">${agent.codename}</h2>
                 </div>
                 
                 <div class="dossier-section">
                     <div class="dossier-label">Legal Name</div>
-                    <div class="dossier-value">${agent.codename === "DIRECTOR" ? "Sasha ███████" : agent.realName}</div>
+                    <div>${agent.codename === "DIRECTOR" ? "Sasha VOLKOV" : agent.realName}</div>
                 </div>
                 
                 <div class="dossier-section">
                     <div class="dossier-label">Security Clearance</div>
-                    <div class="dossier-value">${agent.clearance}</div>
+                    <div>${agent.clearance}</div>
                 </div>
                 
                 <div class="dossier-section">
                     <div class="dossier-label">Operational Specialty</div>
-                    <div class="dossier-value">${agent.specialty}</div>
+                    <div>${agent.specialty}</div>
                 </div>
                 
                 <div class="dossier-section">
                     <div class="dossier-label">Current Status</div>
-                    <div class="dossier-value">${agent.status}</div>
+                    <div>${agent.status}</div>
                 </div>
                 
                 <div class="dossier-section">
                     <div class="dossier-label">Mission Count</div>
-                    <div class="dossier-value">${agent.missions} operations</div>
+                    <div>${agent.missions} operations</div>
                 </div>
                 
                 <div class="dossier-section">
                     <div class="dossier-label">Psychological Profile</div>
-                    <div class="dossier-value">${agent.description}</div>
+                    <div>${agent.description}</div>
                 </div>
                 
                 <div class="dossier-section">
                     <div class="dossier-label">Known Abilities</div>
-                    <div class="dossier-value">${agent.skills.map(s => `<i class="fas fa-check"></i> ${s}`).join('<br>')}</div>
+                    <div>${agent.skills.map(s => `• ${s}`).join('<br>')}</div>
                 </div>
                 
                 <div class="dossier-section">
                     <div class="dossier-label">Operational Vulnerabilities</div>
-                    <div class="dossier-value">${agent.weaknesses.map(w => `<i class="fas fa-times"></i> ${w}`).join('<br>')}</div>
+                    <div>${agent.weaknesses.map(w => `• ${w}`).join('<br>')}</div>
                 </div>
                 
                 <div class="dossier-section">
                     <div class="dossier-label">Home Address</div>
-                    <div class="dossier-value">
-                        <span class="dossier-redacted" onclick="this.classList.toggle('revealed')">[REDACTED - LEVEL 5 CLEARANCE REQUIRED]</span>
-                    </div>
-                </div>
-                
-                <div class="dossier-section">
-                    <div class="dossier-label">Favorite Treat</div>
-                    <div class="dossier-value">
-                        <span class="dossier-redacted" onclick="this.classList.toggle('revealed')">[CLASSIFIED - AGENT SAFETY]</span>
-                    </div>
+                    <div><span class="redacted" onclick="this.classList.toggle('revealed')">[REDACTED - LEVEL 5 CLEARANCE REQUIRED]</span></div>
                 </div>
             `;
             
@@ -996,43 +1122,44 @@
             
             modalBody.innerHTML = `
                 <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 5px solid #ff0000; background-image: url('${threat.image}'); background-size: cover; background-position: center; box-shadow: 0 0 30px rgba(255,0,0,0.5);"></div>
-                    <h2 style="font-family: 'Share Tech Mono', monospace; color: #ff0000; margin-top: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">${threat.name}</h2>
-                </div>
-                
-                <div class="dossier-section" style="border-color: #660000;">
-                    <div class="dossier-label" style="color: #ff0000;">Classification</div>
-                    <div class="dossier-value">${threat.classification}</div>
-                </div>
-                
-                <div class="dossier-section" style="border-color: #660000;">
-                    <div class="dossier-label" style="color: #ff0000;">Threat Level</div>
-                    <div class="dossier-value" style="color: #ff0000; font-size: 1.5rem; font-weight: bold;">${threat.threatLevel}</div>
-                </div>
-                
-                <div class="dossier-section" style="border-color: #660000;">
-                    <div class="dossier-label" style="color: #ff0000;">Psychological Profile</div>
-                    <div class="dossier-value" style="background: #1a0000; padding: 1rem; border-left: 3px solid #ff0000;">${threat.psychologicalProfile}</div>
-                </div>
-                
-                <div class="dossier-section" style="border-color: #660000;">
-                    <div class="dossier-label" style="color: #ff0000;">Known Crimes</div>
-                    <div class="dossier-value">
-                        ${threat.crimes.map(c => `<i class="fas fa-skull" style="color: #ff0000;"></i> ${c}`).join('<br>')}
+                    <div class="agent-photo-container" style="width: 150px; height: 150px; margin: 0 auto; border-radius: 50%; border: 4px solid var(--stamp-red);">
+                        <img src="${threat.image}" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(30%);" alt="${threat.name}">
                     </div>
+                    <h2 style="font-family: 'Special Elite', serif; color: var(--stamp-red); margin-top: 1rem;">${threat.name}</h2>
+                    <div class="stamp" style="margin-top: 0.5rem;">THREAT FILE</div>
                 </div>
                 
-                <div class="dossier-section" style="border-color: #660000;">
-                    <div class="dossier-label" style="color: #ff0000;">Last Known Location</div>
-                    <div class="dossier-value" style="font-family: 'Share Tech Mono', monospace; color: #ff6600;">${threat.lastSeen}</div>
+                <div class="dossier-section">
+                    <div class="dossier-label">Classification</div>
+                    <div>${threat.classification}</div>
                 </div>
                 
-                <div class="dossier-section" style="border-color: #660000;">
-                    <div class="dossier-label" style="color: #ff0000;">Operational Weaknesses</div>
-                    <div class="dossier-value">${threat.weaknesses}</div>
+                <div class="dossier-section">
+                    <div class="dossier-label">Threat Level</div>
+                    <div style="color: var(--stamp-red); font-size: 1.3rem; font-weight: bold;">${threat.threatLevel}</div>
                 </div>
                 
-                <div style="background: #ff0000; color: #fff; padding: 1rem; text-align: center; margin-top: 1rem; font-family: 'Share Tech Mono', monospace; font-weight: bold;">
+                <div class="dossier-section">
+                    <div class="dossier-label">Psychological Profile</div>
+                    <div style="background: #ffeeee; padding: 1rem; border-left: 3px solid var(--stamp-red);">${threat.psychologicalProfile}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Known Crimes</div>
+                    <div>${threat.crimes.map(c => `• ${c}`).join('<br>')}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Last Known Location</div>
+                    <div style="font-family: 'Courier Prime', monospace; color: var(--stamp-red);">${threat.lastSeen}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Operational Weaknesses</div>
+                    <div>${threat.weaknesses}</div>
+                </div>
+                
+                <div style="background: var(--stamp-red); color: white; padding: 1rem; text-align: center; font-family: 'Courier Prime', monospace; font-weight: bold;">
                     <i class="fas fa-exclamation-triangle"></i> DO NOT APPROACH - CALL IMMEDIATE BACKUP <i class="fas fa-exclamation-triangle"></i>
                 </div>
             `;
@@ -1043,25 +1170,10 @@
         function renderMissions() {
             const log = document.getElementById('missionLog');
             log.innerHTML = missions.map(m => `
-                <div class="mission-item">
-                    <div class="mission-time">${m.time}</div>
-                    <div class="mission-content">${m.text}</div>
-                    <span class="mission-status status-${m.status}">${m.status}</span>
-                </div>
-            `).join('');
-        }
-        
-        function renderSurveillance() {
-            const grid = document.getElementById('surveillanceGrid');
-            grid.innerHTML = feeds.map(f => `
-                <div class="feed-item ${f.isBenny ? 'benny-feed' : ''}">
-                    <div class="feed-header ${f.isOpsCenter ? 'ops-header' : ''}">
-                        <span>${f.isBenny ? '<i class="fas fa-exclamation-triangle"></i> ' : ''}${f.location}</span>
-                        ${f.status === 'LIVE' ? '<div class="live-indicator"><div class="live-dot"></div>LIVE</div>' : '<span style="color: var(--light-gray);">NO SIGNAL</span>'}
-                    </div>
-                    <div class="feed-content" style="${f.isOpsCenter ? 'background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; align-items: center; justify-content: center;' : ''}${f.isBenny ? ' --no-signal: none;' : ''}">
-                        ${f.isOpsCenter ? '<i class="fas fa-shield-alt" style="font-size: 4rem; color: var(--gold);"></i><div style="position: absolute; bottom: 10px; font-family: monospace; font-size: 0.7rem; color: var(--gold);">SECURE</div>' : `<i class="fas fa-${f.icon}"></i>`}
-                    </div>
+                <div class="log-entry ${m.status}">
+                    <div class="log-time">${m.time}</div>
+                    <div class="log-content">${m.text}</div>
+                    <div class="log-status ${m.status}">${m.status}</div>
                 </div>
             `).join('');
         }
@@ -1069,15 +1181,17 @@
         function renderComms() {
             const list = document.getElementById('commList');
             list.innerHTML = comms.map((c, index) => `
-                <div class="comm-item ${c.isDecrypted ? 'decrypted' : ''}" id="comm-${index}">
+                <div class="comm-item" id="comm-${index}">
                     <div class="comm-header">
-                        <span class="comm-sender"><i class="fas fa-user-secret"></i> ${c.sender}</span>
-                        <span class="comm-time">${c.time}</span>
+                        <span><i class="fas fa-user-secret"></i> ${c.sender}</span>
+                        <span>${c.time}</span>
                     </div>
-                    <div class="comm-preview" id="comm-text-${index}">
-                        ${c.isDecrypted ? (c.isImage ? c.decrypted : c.decrypted) : `<i class="fas fa-lock"></i> ${c.encrypted}`}
+                    <div class="comm-body">
+                        <div id="comm-text-${index}" class="${c.isDecrypted ? '' : 'comm-encrypted'}">
+                            ${c.isDecrypted ? c.decrypted : `<i class="fas fa-lock"></i> ${c.encrypted}`}
+                        </div>
+                        ${!c.isDecrypted ? `<button class="decrypt-btn" onclick="decryptMessage(${index})"><i class="fas fa-unlock"></i> DECRYPT</button>` : ''}
                     </div>
-                    ${!c.isDecrypted ? `<button class="decrypt-btn" onclick="decryptMessage(${index})"><i class="fas fa-unlock"></i> DECRYPT</button>` : ''}
                 </div>
             `).join('');
         }
@@ -1085,19 +1199,23 @@
         function decryptMessage(index) {
             const comm = comms[index];
             const textEl = document.getElementById(`comm-text-${index}`);
-            const itemEl = document.getElementById(`comm-${index}`);
             
-            textEl.innerHTML = '<em style="color: var(--light-gray);"><i class="fas fa-spinner fa-spin"></i> Decrypting...</em>';
+            textEl.innerHTML = '<em style="color: #666;"><i class="fas fa-spinner fa-spin"></i> DECRYPTING...</em>';
             
             setTimeout(() => {
                 comm.isDecrypted = true;
                 textEl.innerHTML = `<i class="fas fa-unlock-alt"></i> ${comm.decrypted}`;
-                itemEl.classList.add('decrypted');
+                textEl.classList.remove('comm-encrypted');
             }, 1000);
         }
         
         document.getElementById('agentModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
+        });
+        
+        // ESC key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
         });
         
         init();
