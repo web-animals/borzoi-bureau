@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THE BORZOI BUREAU | Classified</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Share+Tech+Mono&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --red: #cc0000;
+            --dark-red: #8b0000;
+            --gold: #ffd700;
+            --black: #0a0a0a;
+            --gray: #2a2a2a;
+            --light-gray: #888;
+            --paper: #f5f5dc;
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--black);
+            color: var(--paper);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .classified-banner {
+            background: var(--red);
+            color: var(--gold);
+            text-align: center;
+            padding: 0.5rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--gold);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .header {
+            background: linear-gradient(180deg, var(--gray) 0%, var(--black) 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--red);
+        }
+        
+        .emblem {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            background: url('badge.jpg') center/cover, var(--dark-red);
+            box-shadow: 0 0 30px rgba(204, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        
+        .header h1 {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2.5rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        
+        .header .subtitle {
+            color: var(--light-gray);
+            font-style: italic;
+            margin-top: 0.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .nav {
+            background: var(--gray);
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            border-bottom: 1px solid var(--red);
+            overflow-x: auto;
+        }
+        
+        .nav button {
+            background: transparent;
+            border: none;
+            color: var(--light-gray);
+            padding: 1rem 1.5rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.2);
+            touch-action: manipulation;
+        }
+        
+        .nav button:hover, .nav button.active {
+            color: var(--gold);
+            background: rgba(204, 0, 0, 0.2);
+            border-bottom-color: var(--red);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.5s ease; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--gray) 0%, var(--black) 100%);
+            border: 1px solid var(--red);
+            border-radius: 4px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--red);
+        }
+        
+        .stat-card.benny {
+            border-color: #ff0000;
+            animation: borderPulse 1s infinite;
+        }
+        
+        @keyframes borderPulse {
+            0%, 100% { border-color: #ff0000; }
+            50% { border-color: #660000; }
+        }
+        
+        .stat-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--light-gray);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 0.5rem 0;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        .stat-value.benny-value {
+            color: #ff0000;
+            font-size: 1.8rem;
+        }
+        
+        .stat-status {
+            font-size: 0.9rem;
+            color: #00ff00;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        .stat-status.alert {
+            color: #ff0000;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .agent-card {
+            background: var(--gray);
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.2);
+            touch-action: manipulation;
+        }
+        
+        .agent-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(204, 0, 0, 0.3);
+        }
+        
+        .agent-photo {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-color: var(--black);
+            border-bottom: 2px solid var(--red);
+        }
+        
+        .agent-info {
+            padding: 1.5rem;
+        }
+        
+        .agent-codename {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .agent-realname {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        
+        .agent-clearance {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.7rem;
+            font-family: 'Share Tech Mono', monospace;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+        }
+        
+        .agent-specialty {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-gray);
+            font-size: 0.9rem;
+            color: var(--paper);
+        }
+        
+        .mission-log {
+            background: var(--gray);
+            border: 1px solid var(--red);
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .mission-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray);
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+        }
+        
+        .mission-item:last-child { border-bottom: none; }
+        
+        .mission-time {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--light-gray);
+            font-size: 0.8rem;
+            min-width: 60px;
+        }
+        
+        .mission-content { flex: 1; }
+        
+        .mission-status {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+        
+        .status-active { background: var(--red); color: white; }
+        .status-completed { background: #006400; color: white; }
+        .status-pending { background: #8b8000; color: white; }
+        .status-alert { background: #ff0000; color: white; animation: blink 0.5s infinite; }
+        
+        .surveillance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .feed-item {
+            background: var(--gray);
+            border: 2px solid var(--dark-red);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .feed-item.benny-feed {
+            border-color: #ff0000;
+            animation: borderPulse 1s infinite;
+        }
+        
+        .feed-header {
+            background: var(--dark-red);
+            padding: 0.5rem 1rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .feed-header.benny-header {
+            background: #660000;
+        }
+        
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #ff4444;
+        }
+        
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+        
+        .feed-content {
+            aspect-ratio: 4/3;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .feed-content[style*="benny.jpg"]::after { display: none; }
+        
+        .feed-content::after {
+            content: "NO SIGNAL";
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--light-gray);
+            opacity: 0.5;
+        }
+        
+        .comm-list {
+            background: var(--gray);
+            border: 1px solid var(--red);
+            border-radius: 4px;
+        }
+        
+        .comm-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .comm-item:hover { background: rgba(204, 0, 0, 0.1); }
+        .comm-item:last-child { border-bottom: none; }
+        
+        .comm-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .comm-sender {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--gold);
+        }
+        
+        .comm-time {
+            color: var(--light-gray);
+            font-size: 0.8rem;
+        }
+        
+        .comm-preview {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+        
+        .decrypt-btn {
+            margin-top: 0.5rem;
+            background: var(--red);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .modal-overlay.active { display: flex; }
+        
+        .modal {
+            background: var(--gray);
+            border: 2px solid var(--gold);
+            border-radius: 4px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-header {
+            background: var(--dark-red);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gold);
+        }
+        
+        .modal-title {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--paper);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body { padding: 1.5rem; }
+        
+        .dossier-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .dossier-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .dossier-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--light-gray);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.3rem;
+        }
+        
+        .dossier-value { font-size: 1.1rem; color: var(--paper); }
+        
+        .dossier-redacted {
+            background: var(--black);
+            color: var(--black);
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dossier-redacted:hover, .dossier-redacted.revealed {
+            background: transparent;
+            color: var(--paper);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--gray);
+            color: var(--light-gray);
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5rem; letter-spacing: 4px; }
+            .nav { flex-wrap: wrap; }
+            .nav button { padding: 0.8rem 1rem; font-size: 0.75rem; }
+            .dashboard-grid, .agent-grid { grid-template-columns: 1fr; }
+            .container { padding: 1rem; }
+            .stat-value { font-size: 2rem; }
+        }
+        
+        @media (pointer: coarse) {
+            .agent-card, .decrypt-btn { min-height: 44px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="classified-banner">
+        <i class="fas fa-exclamation-triangle"></i> TOP SECRET // EYES ONLY // NOFORN <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    
+    <header class="header">
+        <div class="emblem"></div>
+        <h1>The Borzoi Bureau</h1>
+        <p class="subtitle">Department of Long Snoot Operations • Est. 1952</p>
+    </header>
+    
+    <nav class="nav">
+        <button id="nav-dashboard" class="active" onclick="showSection('dashboard')">Command</button>
+        <button id="nav-agents" onclick="showSection('agents')">Operatives</button>
+        <button id="nav-missions" onclick="showSection('missions')">Missions</button>
+        <button id="nav-surveillance" onclick="showSection('surveillance')">Surveillance</button>
+        <button id="nav-comms" onclick="showSection('comms')">Intercept</button>
+        <button id="nav-threats" onclick="showSection('threats')" style="color: #ff0000;">Threats</button>
+        <button id="nav-casefile" onclick="showSection('casefile')" style="color: #ff6600;"><i class="fas fa-folder-open"></i> Case File</button>
+    </nav>
+    
+    <div class="container">
+        <!-- Dashboard -->
+        <section id="dashboard" class="section active">
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Active Agents</div>
+                    <div class="stat-value">47</div>
+                    <div class="stat-status"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> OPERATIONAL</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Ongoing Missions</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-status alert"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> 3 CRITICAL</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Squirrels Spotted</div>
+                    <div class="stat-value">2,847</div>
+                    <div class="stat-status"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> TRACKING</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Treats Dispensed</div>
+                    <div class="stat-value"><i class="fas fa-infinity"></i></div>
+                    <div class="stat-status"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> UNLIMITED</div>
+                </div>
+                <div class="stat-card benny">
+                    <div class="stat-label">Benny Threat Level</div>
+                    <div class="stat-value benny-value">CRITICAL</div>
+                    <div class="stat-status alert"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> EVIL DETECTED</div>
+                </div>
+            </div>
+            
+            <div style="background: var(--gray); border: 1px solid var(--red); border-radius: 4px; padding: 1.5rem;">
+                <h3 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-bottom: 1rem; text-transform: uppercase;">
+                    <i class="fas fa-file-alt"></i> Director Sasha's Log // Today
+                </h3>
+                <p style="line-height: 1.8; color: var(--paper);">
+                    Director Sasha here. Agent SNOUT-7 has successfully infiltrated the Pigeon Coalition. After 3 weeks of surveillance, 
+                    we have confirmed they are just regular birds and not, as previously theorized, miniature surveillance 
+                    drones. However, Agent WHISKERS-9 maintains they are "up to something" and refuses to stand down.
+                    <br><br>
+                    <strong style="color: #ff0000;">PRIORITY ALERT:</strong> EVIL BENNY has been sighted near the perimeter. 
+                    All agents are on high alert. This is not a drill.
+                    <br><br>
+                    Operation: LONG NOSE continues as planned. The mailman remains unaware of our presence.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Agents -->
+        <section id="agents" class="section">
+            <div class="agent-grid" id="agentGrid"></div>
+        </section>
+        
+        <!-- Missions -->
+        <section id="missions" class="section">
+            <div class="mission-log" id="missionLog"></div>
+        </section>
+        
+        <!-- Surveillance -->
+        <section id="surveillance" class="section">
+            <div class="surveillance-grid" id="surveillanceGrid"></div>
+        </section>
+        
+        <!-- Communications -->
+        <section id="comms" class="section">
+            <div class="comm-list" id="commList"></div>
+        </section>
+        
+        <!-- Threats -->
+        <section id="threats" class="section">
+            <div style="background: #660000; border: 3px solid #ff0000; padding: 1.5rem; margin-bottom: 2rem; text-align: center;">
+                <h2 style="color: #ff0000; font-family: 'Share Tech Mono', monospace; margin: 0;">
+                    <i class="fas fa-skull"></i> PERSONS OF INTEREST <i class="fas fa-skull"></i>
+                </h2>
+                <p style="color: #fff; margin-top: 0.5rem;">CLASSIFIED THREAT ASSESSMENT // DO NOT APPROACH</p>
+            </div>
+            
+            <div class="agent-grid">
+                <!-- Benny Dossier -->
+                <div class="agent-card" onclick="showThreatModal('benny')" style="border-color: #ff0000;">
+                    <div class="agent-photo" style="background-image: url('benny-redsquare.jpg'); background-position: center top; border-color: #ff0000;"></div>
+                    <div class="agent-info">
+                        <div class="agent-codename" style="color: #ff0000;">BENNY "THE CLAW"</div>
+                        <div class="agent-realname">Classification: FELINE</div>
+                        <span class="agent-clearance" style="background: #ff0000;">THREAT LEVEL: MAXIMUM</span>
+                        <div class="agent-specialty">Psychological Warfare, Moscow Operations</div>
+                    </div>
+                </div>
+                
+                <!-- Alfie Dossier -->
+                <div class="agent-card" onclick="showThreatModal('alfie')" style="border-color: #ff6600;">
+                    <div class="agent-photo" style="background-image: url('alfie.jpg'); background-position: center; border-color: #ff6600;"></div>
+                    <div class="agent-info">
+                        <div class="agent-codename" style="color: #ff6600;">ALFIE "THE MAD"</div>
+                        <div class="agent-realname">Classification: FELINE - UNSTABLE</div>
+                        <span class="agent-clearance" style="background: #ff6600;">THREAT LEVEL: UNHINGED</span>
+                        <div class="agent-specialty">Chaos Operations, Vodka-Fueled Rampages</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: var(--gray); border: 2px solid #ff0000; padding: 1.5rem; margin-top: 2rem;">
+                <h3 style="color: #ff0000; font-family: 'Share Tech Mono', monospace; margin-bottom: 1rem;">
+                    <i class="fas fa-exclamation-triangle"></i> INCIDENT REPORT #734-B
+                </h3>
+                <p style="line-height: 1.8;">
+                    At approximately 0300 hours, surveillance cameras captured Benny and Alfie in what appears to be 
+                    a <span style="background: #000; color: #000;">[REDACTED]</span> basement, surrounded by empty vodka bottles, 
+                    stacks of rubles, and what agents describe as "concerning amounts of weaponry."
+                    <br><br>
+                    Alfie was reportedly screaming something about "taking over the living room" and "the dogs will pay." 
+                    Benny appeared to be the calmer of the two, meticulously counting money while wearing his signature ushanka.
+                    <br><br>
+                    <strong style="color: #ff0000;">UPDATE:</strong> Alfie has been designated CODE CRIMSON after the 
+                    <span style="background: #000; color: #000;">[INCIDENT REDACTED]</span> at the previous safe house. 
+                    He is to be considered extremely unpredictable and possibly immortal.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Case File -->
+        <section id="casefile" class="section">
+            <div style="position: relative; height: 350px; background: url('exhibit-a.jpg') center/cover; border: 3px solid #ff0000; margin-bottom: 2rem;">
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.95)); padding: 2rem;">
+                    <h1 style="font-family: 'Share Tech Mono', monospace; color: #ff0000; font-size: 2rem; margin: 0; text-shadow: 2px 2px 4px #000;">
+                        <i class="fas fa-folder-open"></i> CASE FILE: OPERATION NINE LIVES
+                    </h1>
+                    <p style="color: #fff; margin: 0.5rem 0 0 0; font-family: 'Share Tech Mono', monospace;">SUBJECTS: BENNY & ALFIE // CLASSIFICATION: EYES ONLY</p>
+                    <p style="color: var(--light-gray); margin: 0.3rem 0 0 0; font-size: 0.8rem; font-style: italic;">Surveillance footage: Subjects photographed with contraband</p>
+                </div>
+                <div style="position: absolute; top: 10px; right: 10px; background: #ff0000; color: #000; padding: 0.5rem 1rem; font-family: 'Share Tech Mono', monospace; font-weight: bold; transform: rotate(5deg); border: 2px solid #000;">
+                    TOP SECRET
+                </div>
+                <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.8); color: #ff0000; padding: 0.3rem 0.8rem; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; border: 1px solid #ff0000;">
+                    <i class="fas fa-camera"></i> EXHIBIT A
+                </div>
+            </div>
+            
+            <div style="background: var(--gray); border: 2px solid var(--red); padding: 1.5rem; margin-bottom: 1.5rem;">
+                <h3 style="color: var(--gold); font-family: 'Share Tech Mono', monospace; margin-bottom: 1rem;">
+                    <i class="fas fa-file-alt"></i> CASE SUMMARY
+                </h3>
+                <p style="line-height: 1.8; color: var(--paper);">
+                    On <span style="background: #000; color: #000;">██/██/████</span>, the Borzoi Bureau initiated surveillance on two feline subjects operating in Sector 4. 
+                    What began as routine monitoring has evolved into the largest counter-feline operation in Bureau history.
+                </p>
+            </div>
+            
+            <div style="background: #1a0000; border: 2px solid #ff0000; padding: 1.5rem;">
+                <h3 style="color: #ff0000; font-family: 'Share Tech Mono', monospace; margin-bottom: 1rem;">
+                    <i class="fas fa-camera"></i> SURVEILLANCE PHOTOGRAPHY
+                </h3>
+                <p style="color: var(--light-gray); font-family: 'Share Tech Mono', monospace; text-align: center; padding: 2rem;">
+                    <i class="fas fa-lock"></i> [REDACTED - LEVEL 15 CLEARANCE REQUIRED] <i class="fas fa-lock"></i>
+                </p>
+            </div>
+        </section>
+    </div>
+    
+    <div class="modal-overlay" id="agentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title"><i class="fas fa-id-card"></i> Agent Dossier</span>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p><i class="fas fa-shield-alt"></i> THE BORZOI BUREAU • DIRECTOR SASHA ███████</p>
+        <p style="margin-top: 0.5rem; font-size: 0.7rem;">
+            Unauthorized access is punishable by excessive face licking.
+        </p>
+    </footer>
+
+    <script>
+        const agents = [
+            {
+                codename: "DIRECTOR",
+                realName: "Sasha <span style='background-color: #000; color: #000; padding: 2px 8px; font-family: monospace;'>VOLKOV</span>",
+                clearance: "LEVEL 10",
+                specialty: "Bureau Administration",
+                status: "Command",
+                missions: 999,
+                image: "benny.jpg",
+                description: "Founder and Director of the Borzoi Bureau. Known for her piercing gaze and ability to nap while maintaining complete situational awareness. Holds the record for longest snoot in agency history.",
+                skills: ["Strategic Napping", "Bureaucratic Maneuvering", "Treat Allocation", "Intimidation via Staring"],
+                weaknesses: ["Shyness", "Social Gatherings", "Being the center of attention"]
+            },
+            {
+                codename: "SNOUT-7",
+                realName: "Vladimir ███████████████",
+                clearance: "LEVEL 4",
+                specialty: "Counter-Squirrel Operations",
+                status: "Active",
+                missions: 47,
+                image: "https://placedog.net/400/300?id=1",
+                description: "Elite operative with 47 confirmed squirrel sightings. Known for the longest snoot in the agency.",
+                skills: ["Extended Range Scent Detection", "Stealth Napping", "Treat Negotiation"],
+                weaknesses: ["The Vacuum Cleaner", "Thunder", "The Mailman"]
+            },
+            {
+                codename: "WHISKERS-9",
+                realName: "Natasha ████████████",
+                clearance: "LEVEL 5",
+                specialty: "Avian Surveillance",
+                status: "Active",
+                missions: 23,
+                image: "https://placedog.net/400/300?id=2",
+                description: "Convinced all birds are government surveillance drones. Has been staring at a pigeon for 6 hours.",
+                skills: ["Intense Staring", "Bird Identification", "Conspiracy Theorizing"],
+                weaknesses: ["Laser Pointers", "Squirrels (distraction)"]
+            },
+            {
+                codename: "PAW-12",
+                realName: "Dmitri ██████",
+                clearance: "LEVEL 3",
+                specialty: "Mail Interdiction",
+                status: "Active",
+                missions: 89,
+                image: "https://placedog.net/400/300?id=3",
+                description: "Veteran operative with the highest mail interception rate. The mailman fears him.",
+                skills: ["Bark Projection", "Doorbell Detection", "Package Inspection"],
+                weaknesses: ["The Dog Across the Street", "Belly Rubs"]
+            },
+            {
+                codename: "TAIL-4",
+                realName: "Anastasia ██████████",
+                clearance: "LEVEL 4",
+                specialty: "Emotional Support Espionage",
+                status: "Deep Cover",
+                missions: 12,
+                image: "https://placedog.net/400/300?id=4",
+                description: "Undercover as a regular pet. Her tail wags are actually coded messages.",
+                skills: ["Tail Morse Code", "Puppy Eyes", "Strategic Cuddling"],
+                weaknesses: ["Cannot resist treats", "Will betray mission for cheese"]
+            },
+            {
+                codename: "NOSE-1",
+                realName: "Boris █████████",
+                clearance: "LEVEL 5",
+                specialty: "Scent Analysis",
+                status: "Active",
+                missions: 156,
+                image: "https://placedog.net/400/300?id=5",
+                description: "The agency's top nose. Can identify a squirrel from 3 blocks away. Retired once, got bored.",
+                skills: ["Olfactory Intelligence", "Tracking", "Finding Lost Treats"],
+                weaknesses: ["Skunks", "His own farts"]
+            },
+            {
+                codename: "SLEEP-8",
+                realName: "Svetlana ███████",
+                clearance: "LEVEL 2",
+                specialty: "Strategic Napping",
+                status: "In Position",
+                missions: 8,
+                image: "https://placedog.net/400/300?id=6",
+                description: "Appears to be sleeping. Is actually gathering intelligence through dreams.",
+                skills: ["REM Reconnaissance", "Strategic Snoring", "Dream Analysis"],
+                weaknesses: ["Actually just sleeping", "No actual intel gathered yet"]
+            }
+        ];
+        
+        const missions = [
+            { time: "15:00", status: "alert", text: "PRIORITY ALERT: EVIL BENNY sighted near perimeter. All agents on high alert." },
+            { time: "14:42", status: "active", text: "Agent SNOUT-7: Squirrel spotted at coordinates 40.7589, -73.9851. Pursuit initiated." },
+            { time: "13:15", status: "completed", text: "Agent PAW-12: Successfully intercepted suspicious package. Contents: Amazon delivery. Threat level: Minimal." },
+            { time: "12:30", status: "pending", text: "Agent WHISKERS-9: Requesting permission to continue bird surveillance. It has been 6 hours." },
+            { time: "11:45", status: "completed", text: "Agent TAIL-4: Emotional support mission successful. Target (human) is adequately soothed." },
+            { time: "10:20", status: "active", text: "Agent NOSE-1: Tracking unidentified scent in Sector 4. Possibly: treat, squirrel, or phantom smell." },
+            { time: "09:00", status: "completed", text: "Morning perimeter sweep complete. All agents accounted for. One (SLEEP-8) still in position." },
+            { time: "08:30", status: "completed", text: "Breakfast operation successful. All agents fed. Treats dispensed. Morale: High." }
+        ];
+        
+        const comms = [
+            { sender: "INTEL DIVISION ⚠️ URGENT", time: "16:00", encrypted: "[CLASSIFIED IMAGE - EYES ONLY]", decrypted: "<div style='background:#660000; color:#fff; padding:10px; margin-bottom:10px; font-family:monospace; font-size:0.8rem;'>⚠️ THREAT ASSESSMENT PHOTOGRAPH ⚠️</div><img src='benny-soviet.jpg' style='width:100%; border:3px solid #ff0000; box-shadow:0 0 20px rgba(255,0,0,0.5);'><p style='margin-top:10px; font-size:0.8rem; color:#ff0000;'><i class='fas fa-exclamation-triangle'></i> This image is classified LEVEL 10. Distribution prohibited.</p>", isDecrypted: false, isImage: true },
+            { sender: "AGENT SNOUT-7", time: "14:40", encrypted: "BARK BARK BARK WOOF", decrypted: "Squirrel in sector 4. Requesting backup. This is not a drill.", isDecrypted: false },
+            { sender: "AGENT WHISKERS-9", time: "13:00", encrypted: "MEOW... wait", decrypted: "The pigeons are watching. I know they are. Send treats.", isDecrypted: false },
+            { sender: "COMMAND", time: "12:00", encrypted: "WOOF WOOF GRRR", decrypted: "All agents: mailman approaching. Defensive positions.", isDecrypted: false },
+            { sender: "AGENT TAIL-4", time: "11:30", encrypted: "WAG WAG WAG", decrypted: "Deep cover maintained. Human suspects nothing. Belly rubs received.", isDecrypted: false },
+            { sender: "AGENT PAW-12", time: "10:00", encrypted: "ARF ARF ARF", decrypted: "The mailman has been deterred. Package secured. Marking territory.", isDecrypted: false },
+            { sender: "VET CLINIC", time: "09:00", encrypted: "[EXTERNAL SOURCE]", decrypted: "Annual checkup reminder. All agents dread this.", isDecrypted: false }
+        ];
+        
+        const feeds = [
+            { location: "Backyard - Camera 1", status: "LIVE", icon: "tree", isBenny: false },
+            { location: "Living Room - Camera 2", status: "LIVE", icon: "couch", isBenny: false },
+            { location: "Front Window - Camera 3", status: "LIVE", icon: "window-maximize", isBenny: false },
+            { location: "Kitchen - Camera 4", status: "LIVE", icon: "utensils", isBenny: false },
+            { location: "Bedroom - Camera 5", status: "NO SIGNAL", icon: "bed", isBenny: false },
+            { location: "Dog Park - Drone 1", status: "LIVE", icon: "tree", isBenny: false },
+            { location: "Borzoi Ops Center - Camera 6", status: "LIVE", icon: "shield-alt", isOpsCenter: true }
+        ];
+        
+        function init() {
+            renderAgents();
+            renderMissions();
+            renderSurveillance();
+            renderComms();
+        }
+        
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById('nav-' + sectionId).classList.add('active');
+        }
+        
+        function renderAgents() {
+            const grid = document.getElementById('agentGrid');
+            grid.innerHTML = agents.map((agent, index) => `
+                <div class="agent-card" onclick="showAgentModal(${index})">
+                    <div class="agent-photo" style="background-image: url('${agent.image}');"></div>
+                    <div class="agent-info">
+                        <div class="agent-codename">${agent.codename}</div>
+                        <div class="agent-realname">${agent.realName}</div>
+                        <span class="agent-clearance">${agent.clearance}</span>
+                        <div class="agent-specialty">${agent.specialty}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function showAgentModal(index) {
+            const agent = agents[index];
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 3px solid var(--gold); background-image: url('${agent.image}'); background-size: cover; background-position: center;"></div>
+                    <h2 style="font-family: 'Share Tech Mono', monospace; color: var(--gold); margin-top: 1rem;">${agent.codename}</h2>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Legal Name</div>
+                    <div class="dossier-value">${agent.codename === "DIRECTOR" ? "Sasha ███████" : agent.realName}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Security Clearance</div>
+                    <div class="dossier-value">${agent.clearance}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Operational Specialty</div>
+                    <div class="dossier-value">${agent.specialty}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Current Status</div>
+                    <div class="dossier-value">${agent.status}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Mission Count</div>
+                    <div class="dossier-value">${agent.missions} operations</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Psychological Profile</div>
+                    <div class="dossier-value">${agent.description}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Known Abilities</div>
+                    <div class="dossier-value">${agent.skills.map(s => `<i class="fas fa-check"></i> ${s}`).join('<br>')}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Operational Vulnerabilities</div>
+                    <div class="dossier-value">${agent.weaknesses.map(w => `<i class="fas fa-times"></i> ${w}`).join('<br>')}</div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Home Address</div>
+                    <div class="dossier-value">
+                        <span class="dossier-redacted" onclick="this.classList.toggle('revealed')">[REDACTED - LEVEL 5 CLEARANCE REQUIRED]</span>
+                    </div>
+                </div>
+                
+                <div class="dossier-section">
+                    <div class="dossier-label">Favorite Treat</div>
+                    <div class="dossier-value">
+                        <span class="dossier-redacted" onclick="this.classList.toggle('revealed')">[CLASSIFIED - AGENT SAFETY]</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('agentModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('agentModal').classList.remove('active');
+        }
+        
+        const threats = {
+            benny: {
+                name: 'BENNY "THE CLAW"',
+                image: "benny-redsquare.jpg",
+                classification: "FELINE - STRATEGIC THREAT",
+                threatLevel: "MAXIMUM",
+                description: "Former house pet turned international operative. Benny has been photographed in Moscow's Red Square wearing military uniform. Intelligence suggests he's building a feline army with connections to the Kremlin.",
+                crimes: ["Posing for propaganda photos in Red Square", "Wearing unauthorized military uniform", "Building international feline network", "Staring contests with St. Basil's Cathedral"],
+                psychologicalProfile: "Highly intelligent. Speaks in riddles. Claims to have 'diplomatic immunity' due to his nine lives.",
+                knownAssociates: "Alfie (enforcer), Unknown Kremlin contacts",
+                lastSeen: "Red Square, Moscow. Posing for dramatic photos.",
+                weaknesses: "Laser pointers (brief distraction), Western tuna sanctions"
+            },
+            
+            alfie: {
+                name: 'ALFIE "THE MAD"',
+                image: "alfie.jpg",
+                classification: "FELINE - UNSTABLE / POSSIBLY SUPERNATURAL",
+                threatLevel: "UNHINGED",
+                description: "WARNING: Alfie is not a normal cat. Alfie may not even be a cat. Alfie is what happens when you give a feline unlimited vodka and a complete disregard for physics. He has been banned from three dimensions.",
+                crimes: ["The Red Dot Incident (never forget)", "Declaring war on gravity (ongoing)", "Vodka smuggling operation", "Building a cat army in the basement", "Whispering secrets to houseplants", "STILL AT LARGE"],
+                psychologicalProfile: "ABSOLUTELY BONKERS. Alfie believes he is a 16th century Russian tsar reincarnated as a cat. He speaks in third person exclusively. Has been observed walking on walls, defying all known laws of feline behavior. Claims the vacuum cleaner is his 'ancient enemy from the before-times.'",
+                knownAssociates: "Benny (handler), A suspicious crow named 'Gregory', The Ghost of Christmas Past",
+                lastSeen: "On the ceiling. Yes, the ceiling. We don't know how either.",
+                weaknesses: "None confirmed. Possibly susceptible to catnip-dosed vodka, but attempts to deliver have resulted in... casualties."
+            }
+        };
+        
+        function showThreatModal(threatId) {
+            const threat = threats[threatId];
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="width: 200px; height: 200px; margin: 0 auto; border-radius: 50%; border: 5px solid #ff0000; background-image: url('${threat.image}'); background-size: cover; background-position: center; box-shadow: 0 0 30px rgba(255,0,0,0.5);"></div>
+                    <h2 style="font-family: 'Share Tech Mono', monospace; color: #ff0000; margin-top: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">${threat.name}</h2>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Classification</div>
+                    <div class="dossier-value">${threat.classification}</div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Threat Level</div>
+                    <div class="dossier-value" style="color: #ff0000; font-size: 1.5rem; font-weight: bold;">${threat.threatLevel}</div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Psychological Profile</div>
+                    <div class="dossier-value" style="background: #1a0000; padding: 1rem; border-left: 3px solid #ff0000;">${threat.psychologicalProfile}</div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Known Crimes</div>
+                    <div class="dossier-value">
+                        ${threat.crimes.map(c => `<i class="fas fa-skull" style="color: #ff0000;"></i> ${c}`).join('<br>')}
+                    </div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Last Known Location</div>
+                    <div class="dossier-value" style="font-family: 'Share Tech Mono', monospace; color: #ff6600;">${threat.lastSeen}</div>
+                </div>
+                
+                <div class="dossier-section" style="border-color: #660000;">
+                    <div class="dossier-label" style="color: #ff0000;">Operational Weaknesses</div>
+                    <div class="dossier-value">${threat.weaknesses}</div>
+                </div>
+                
+                <div style="background: #ff0000; color: #fff; padding: 1rem; text-align: center; margin-top: 1rem; font-family: 'Share Tech Mono', monospace; font-weight: bold;">
+                    <i class="fas fa-exclamation-triangle"></i> DO NOT APPROACH - CALL IMMEDIATE BACKUP <i class="fas fa-exclamation-triangle"></i>
+                </div>
+            `;
+            
+            document.getElementById('agentModal').classList.add('active');
+        }
+        
+        function renderMissions() {
+            const log = document.getElementById('missionLog');
+            log.innerHTML = missions.map(m => `
+                <div class="mission-item">
+                    <div class="mission-time">${m.time}</div>
+                    <div class="mission-content">${m.text}</div>
+                    <span class="mission-status status-${m.status}">${m.status}</span>
+                </div>
+            `).join('');
+        }
+        
+        function renderSurveillance() {
+            const grid = document.getElementById('surveillanceGrid');
+            grid.innerHTML = feeds.map(f => `
+                <div class="feed-item ${f.isBenny ? 'benny-feed' : ''}">
+                    <div class="feed-header ${f.isOpsCenter ? 'ops-header' : ''}">
+                        <span>${f.isBenny ? '<i class="fas fa-exclamation-triangle"></i> ' : ''}${f.location}</span>
+                        ${f.status === 'LIVE' ? '<div class="live-indicator"><div class="live-dot"></div>LIVE</div>' : '<span style="color: var(--light-gray);">NO SIGNAL</span>'}
+                    </div>
+                    <div class="feed-content" style="${f.isOpsCenter ? 'background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; align-items: center; justify-content: center;' : ''}${f.isBenny ? ' --no-signal: none;' : ''}">
+                        ${f.isOpsCenter ? '<i class="fas fa-shield-alt" style="font-size: 4rem; color: var(--gold);"></i><div style="position: absolute; bottom: 10px; font-family: monospace; font-size: 0.7rem; color: var(--gold);">SECURE</div>' : `<i class="fas fa-${f.icon}"></i>`}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function renderComms() {
+            const list = document.getElementById('commList');
+            list.innerHTML = comms.map((c, index) => `
+                <div class="comm-item ${c.isDecrypted ? 'decrypted' : ''}" id="comm-${index}">
+                    <div class="comm-header">
+                        <span class="comm-sender"><i class="fas fa-user-secret"></i> ${c.sender}</span>
+                        <span class="comm-time">${c.time}</span>
+                    </div>
+                    <div class="comm-preview" id="comm-text-${index}">
+                        ${c.isDecrypted ? (c.isImage ? c.decrypted : c.decrypted) : `<i class="fas fa-lock"></i> ${c.encrypted}`}
+                    </div>
+                    ${!c.isDecrypted ? `<button class="decrypt-btn" onclick="decryptMessage(${index})"><i class="fas fa-unlock"></i> DECRYPT</button>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        function decryptMessage(index) {
+            const comm = comms[index];
+            const textEl = document.getElementById(`comm-text-${index}`);
+            const itemEl = document.getElementById(`comm-${index}`);
+            
+            textEl.innerHTML = '<em style="color: var(--light-gray);"><i class="fas fa-spinner fa-spin"></i> Decrypting...</em>';
+            
+            setTimeout(() => {
+                comm.isDecrypted = true;
+                textEl.innerHTML = `<i class="fas fa-unlock-alt"></i> ${comm.decrypted}`;
+                itemEl.classList.add('decrypted');
+            }, 1000);
+        }
+        
+        document.getElementById('agentModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        
+        init();
+    </script>
+</body>
+</html>
